@@ -1,0 +1,122 @@
+commit bd4727db2e782378655025c4ac3b36f17bfa973d
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:43:54 2019 +0200
+
+    Poista file1, uudelleen nimeä file2
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 5f1bb2fdfb6c438918a4e74d247e328c0a82ab40
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:41:40 2019 +0200
+
+    Luo hakemisto tiedostoineen
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 069bfa3813b92cb25035e491d20300632f8b524d
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:36:31 2019 +0200
+
+    Muokkaa kahta tiedostoa
+
+ eka.txt    | 13 ++++++-------
+ kolmas.txt |  3 +--
+ 2 files changed, 7 insertions(+), 9 deletions(-)
+
+commit 70f889912ec1011498bfa83b83b40262546bff0d
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:34:23 2019 +0200
+
+    Uudelleen nimeä tiedosto.txt
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit b25b7bbb41b86d2590422f3424b53f808fa469e5
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:33:45 2019 +0200
+
+    Poista toinen.txt
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit e2c70ed5cc5d061926985f264f2ca831f1871b65
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:33:12 2019 +0200
+
+    Muokkaile tiedosto.txt -tiedostoa
+
+ tiedosto.txt | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit bb1846cbe4c202eb71ff3663bf1ea80386bf052f
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:28:38 2019 +0200
+
+    Muokkaa tekstiä
+
+ tiedosto.txt | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+commit 17872fa17a38e4c9ea11ae637e0ebc85f7cc6b26
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:27:38 2019 +0200
+
+    Kopio tekstiä tiedostoon tiedosto.txt
+
+ tiedosto.txt | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+commit 61010fdfaf867cffbe556ae2000b427e95fff42d
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:24:19 2019 +0200
+
+    Lisää uusi hakemisto ja tiedosto
+
+ stuff/neljas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 157358b23958baf1ea3887e84036f8eff9b4d4d4
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:23:25 2019 +0200
+
+    Muokkaa tiedostoja kolmas ja toinen
+
+ kolmas.txt | 2 ++
+ toinen.txt | 1 +
+ 2 files changed, 3 insertions(+)
+
+commit ede9e1b62fbcf5baf1bf829b0e865ddc775408b4
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:22:40 2019 +0200
+
+    Lisää kolmas.txt
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 1e6660c333b53e9caf7fdcaf55b1b19e57d69cb6
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:21:15 2019 +0200
+
+    Tee muutos ja lisää toinen.txt -tiedosto
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit c0cc852b23701310aab8a04e2482999a4efff120
+Author: Mieskalmari <palonen.lauri@gmail.com>
+Date:   Mon Mar 18 19:19:44 2019 +0200
+
+    luo tiedosto.txt
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
