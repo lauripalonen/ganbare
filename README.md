@@ -1,9 +1,7 @@
-# Otsikko
+# Ohjelmistotekniikka, harjoitustyö
+## Tehtävät
+### Viikko 1
+[gitlog.txt](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
-Leipätekstiä blaa blaa blaa.
-Nyt seuraa boldattu teksti: **bold**.
-Eipä unohdeta kursiivia: *kursiivi*
-Koitetaanpa [linkkiä](http://google.fi)
-
-### Pienempi otsikko
+[komentorivi.txt](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
 
