@@ -5,3 +5,4 @@
 
 [komentorivi.txt](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
 
+*copyright: Lauri Palonen*
