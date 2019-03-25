@@ -6,8 +6,8 @@ käyttäjätunnuksen. Sanasto ja käyttäjät ovat omissa tietokannoissaan.
 
 ## Käyttäjät
 Lähtökohtaisesti sovelluksella on vain yksi käyttäjärooli, eli normaali
-käyttäjä. Mahdollinen myöhemmin lisättävä toiminnallisuus on admin
-käyttäjäroolin, jolla voi esimerkiksi muokata sanastoa suoraan
+käyttäjä. Mahdollinen myöhemmin lisättävä toiminnallisuus on
+admin-käyttäjärooli, jolla voi esimerkiksi muokata sanastoa suoraan
 käyttöliittymästä. 
 
 ## Käyttöliittymäluonnos
@@ -29,16 +29,16 @@ Sovelluksessa on seuraavat näkymät:
 ### Valikkoruutu
 - valikkoruudussa käyttäjä luo itselleen mieluisan harjoittelusession
 - käyttäjän voi muokata seuraavia vaihtoehtoja:
- - session pituus: numeraaliarvo viidestä koko sanastokannan kokoon 
- - kysymysten suunta: suomi-japani tai japani-suomi
- - mitä sanastoa kysytään (rasti ruutuun): verbit, adjektiivit, substantiivit,
+  - session pituus: numeraaliarvo viidestä koko sanastokannan kokoon 
+  - kysymysten suunta: suomi-japani tai japani-suomi
+  - mitä sanastoa kysytään (rasti ruutuun): verbit, adjektiivit, substantiivit,
 jne. 
 - napit session käynnistämiselle ja sovelluksesta poistumiselle
 
 ### Tehtäväruutu
 - ruudussa aina yksi kysyttävä sana kerrallaan
- - suomeksi kysymys on länsimaisilla aakkosilla
- - japaniksi kysymys on kana-merkistöllä
+  - suomeksi kysymys on länsimaisilla aakkosilla
+  - japaniksi kysymys on kana-merkistöllä
 - näyttää session etenemisen (esim. 3/10 kysymykseen vastattu)
 - lomakekenttä käyttäjän vastaukselle
 - painikkeet vastaamiselle ja lopettamiselle
@@ -51,19 +51,19 @@ väärin, ja oikea vastaus
 
 ## Jatkokehitysideoita
 - sovelluksen visuaalisen ilmeen kehittäminen
-- Audioelementtien lisääminen
+- audioelementtien lisääminen
 - session optimointi käyttäjän edellisten suoritusten perusteella
- - käyttäjälle vaikeiden kysymysten kysyminen useammin
- - helppojen kysymysten kysyminen harvemmin
-  - mahdollisuus myös käyttäjälle valita helppojen kysymysten pudottaminen
+  - käyttäjälle vaikeiden kysymysten kysyminen useammin
+  - helppojen kysymysten kysyminen harvemmin
+   - mahdollisuus myös käyttäjälle valita helppojen kysymysten pudottaminen
 pois tulevista sessioista
-- admin käyttäjärooli
- - sanaston muokkaus suoraan sovelluksessa
-- highscore taulu
+- admin-käyttäjärooli
+  - sanaston muokkaus suoraan sovelluksessa
+- highscore-taulu
 - sanojen tarkempi luokittelu:
- - kurssin aihealueiden mukaan (esim. Helsingin Yliopistolla käytettävän
+  - kurssin aihealueiden mukaan (esim. Helsingin Yliopistolla käytettävän
  oppikirjan luvun 4 sanasto)
- - vaikeusaste, määräytyy sen mukaan miten eri sessioissa kysymykseen on vastattu
-- Kanjilaajennus
- - Mahdollisuus kanjimerkistön harjoitteluun
+  - vaikeusaste, määräytyy sen mukaan miten eri sessioissa kysymykseen on vastattu
+- kanjilaajennus
+  - mahdollisuus kanjimerkistön harjoitteluun
 
