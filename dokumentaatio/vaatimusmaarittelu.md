@@ -36,7 +36,6 @@ Sovelluksessa on seuraavat näkymät:
   - kysymysten suunta: suomi-japani tai japani-suomi
   - mitä sanastoa kysytään (rasti ruutuun): verbit, adjektiivit, substantiivit,
 jne. 
-- napit session käynnistämiselle ja sovelluksesta poistumiselle
 
 ### Tehtäväruutu
 - ruudussa aina yksi kysyttävä sana kerrallaan
@@ -44,7 +43,6 @@ jne.
   - japaniksi kysymys on kana-merkistöllä
 - näyttää session etenemisen (esim. 3/10 kysymykseen vastattu)
 - lomakekenttä käyttäjän vastaukselle
-- painikkeet vastaamiselle ja lopettamiselle
 - seuraavalla kysymysruudulla lyhyt palaute oliko edeltävä vastaus oikein vai
 väärin, ja oikea vastaus
 - session sanasto koostuu satunnaisista sanastokannan sanoista, jotka
@@ -52,7 +50,6 @@ täsmäävät käyttäjän valikkoruudussa antamiin määrittelyihin
 
 ### Yhteenvetoruutu
 - antaa palautteen sessiosta (esim. 9/10 vastausta oikein)
-- painikkeet lopettamiselle ja valikkoruutuun palaamiselle
 
 ## Jatkokehitysideoita
 - sovelluksen visuaalisen ilmeen kehittäminen
@@ -67,7 +64,7 @@ pois tulevista sessioista
 - highscore-taulu
 - sanojen tarkempi luokittelu:
   - kurssin aihealueiden mukaan (esim. Helsingin Yliopistolla käytettävän
- oppikirjan luvun 4 sanasto)
+ oppikirjan lukujen mukaisesti)
   - vaikeusaste, määräytyy sen mukaan miten eri sessioissa kysymykseen on vastattu
 - kanjilaajennus
   - mahdollisuus kanjimerkistön harjoitteluun
