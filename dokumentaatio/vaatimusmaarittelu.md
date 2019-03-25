@@ -18,6 +18,9 @@ Sovelluksessa on seuraavat näkymät:
 3. Tehtäväruutu - kysyttävä sana ja vastauslomake
 4. Yhteenvetoruutu -  palaute suoritetusta tehtäväsessiosta
 
+<img src=https://raw.githubusercontent.com/mieskalmari/ot-harjoitustyo/dokumentaatio/kuvat/k%C3%A4ytt%C3%B6liittym%C3%A4luonnos.jpg">
+
+
 ## Perusversion toiminnallisuuksia
 
 ### Kirjautumisruutu
