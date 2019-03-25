@@ -18,7 +18,7 @@ Sovelluksessa on seuraavat näkymät:
 3. Tehtäväruutu - kysyttävä sana ja vastauslomake
 4. Yhteenvetoruutu -  palaute suoritetusta tehtäväsessiosta
 
-## Perusversion tarjoama toiminnallisuus
+## Perusversion toiminnallisuuksia
 
 ### Kirjautumisruutu
 - käyttäjä voi luoda uuden tunnuksen, tai kirjautua sovellukseen
@@ -44,6 +44,8 @@ jne.
 - painikkeet vastaamiselle ja lopettamiselle
 - seuraavalla kysymysruudulla lyhyt palaute oliko edeltävä vastaus oikein vai
 väärin, ja oikea vastaus
+- session sanasto koostuu satunnaisista sanastokannan sanoista, jotka
+täsmäävät käyttäjän valikkoruudussa antamiin määrittelyihin
 
 ### Yhteenvetoruutu
 - antaa palautteen sessiosta (esim. 9/10 vastausta oikein)
@@ -66,4 +68,9 @@ pois tulevista sessioista
   - vaikeusaste, määräytyy sen mukaan miten eri sessioissa kysymykseen on vastattu
 - kanjilaajennus
   - mahdollisuus kanjimerkistön harjoitteluun
-
+- henkilökohtaisen sessiohistorian tarkastelu
+  - esim. sessiopäivät, onnistumisprosentti, vaikeimmat sanat
+- päivämäärän näyttäminen japaniksi aloitusruudussa
+- session jatkaminen kunnes kaikki vastaukset oikein 
+- palautejärjestelmän kehittäminen
+  - käyttäjän palkitseminen eri tavoitteiden saavuttamisesta
