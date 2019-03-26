@@ -11,3 +11,7 @@
 [määrittelydokumentti](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittelu.md)
 
 [työaikakirjanpito](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
+
+### Viikko 3
+[viikon 3 laskarit](https://github.com/Mieskalmari/ot-harjoitustyo/tree/master/laskarit/viikko3)
+

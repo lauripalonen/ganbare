@@ -1,0 +1,26 @@
+title Sekvenssikaavio
+
+Main->Machine: Machine()
+Machine->tank: FuelTank()
+note right of tank: fuelContents = 0
+Machine->tank: Fill(40)
+note right of tank: fuelContents = 40
+Machine->engine: Engine(tank)
+Main->Machine: drive()
+Machine->engine: start()
+engine->tank: consume(5)
+note right of tank: fuelContents = 35
+loop while fuelContents > 0
+  Machine->+engine: isRunning()
+  engine->+tank: contentsLeft()
+  tank-->-engine: 35
+  engine-->-Machine: true
+  Machine->engine: useEnergy()
+  engine->tank: consume(10)
+  note right of tank: fuelContents = 25
+end
+Machine->engine: isRunning()
+engine->tank: contentsLeft()
+tank-->engine: 0
+engine-->Machine: false
+
