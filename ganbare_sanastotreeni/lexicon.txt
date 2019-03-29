@@ -1,0 +1,18 @@
+アパート:kerrostalo:1:8
+バスケットボール:koripallo:1:8
+チョコレート:suklaa:1:8
+ちゅうごく:Kiina:1:8
+だんす:tanssi:1:8
+えのし:Enoshima:1:8
+ごまんいん:50000 henkeä:1:8
+はんとし:puoli vuotta:1:8
+ハワイ:hawaii:1:8
+いっしゅうかん:viikon ajan:1:8
+じゅういちにちかん:11 päivän ajan:1:8
+きしゃ:reportteri:1:8
+こどものひ:lasten päivä:1:8
+コールデンウィーク:golden week:1:8
+きょうむ:opintoasiat:1:8
+まえ:aiemmin:1:8
+まいにち:joka päivä:1:8
+メニュー:ruokalista:1:8
