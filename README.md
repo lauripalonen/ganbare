@@ -7,11 +7,11 @@ Ganbare!!! -sanastotreeni on harjoittelusovellus japanin kielen sanastoa varten.
 [Työaikakirjanpito](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 ## Versiot
-*29.3.2014 (Nykyinen)*
+**29.3.2014 (Nykyinen)**
 
-Raaka tekstikäyttöliittymärunko. Sovelluksella pystyy määrittelemään harjoittelusession pituuden ja vastaamaan session arpomiin kysymyksiin suomeksi. Sovellus ylläpitää tietoa oikeiden vastausten määrästä. Sanasto on tekstitiedostossa lexicon.txt. 
+Raaka tekstikäyttöliittymärunko. Sovelluksella pystyy määrittelemään harjoittelusession pituuden ja vastaamaan arvottuihin kysymyksiin suomeksi. Sovellus ylläpitää tietoa oikeiden vastausten määrästä. Sanasto on tekstitiedostossa _lexicon.txt_. 
 
-Session pituutta lukuunottamatta sessiomäärittelyn muut kohdat (kysymyskieli, sanaluokat) eivät vaikuta vielä generoitavaan harjoittelusessioon. 
+Kirjautumistiedot, sekä sessiomäärittelyn kysymyskieli ja sanaluokat eivät vielä toteuta mitään varsinaisia toiminnallisuuksia sovelluksessa. Sovelluksella on yksi testi joka testaa sanaston generoitumista.   
 
 ## Komentorivitoiminnot
 
