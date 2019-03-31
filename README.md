@@ -1,5 +1,5 @@
-# Ganbare!!! -sanastotreeni
-Ganbare!!! -sanastotreeni on harjoittelusovellus japanin kielen sanastoa varten. Sanasto perustuu Helsingin Yliopiston japanin kielen kurssien sanastoon.  
+# Ganbare!!! 
+Ganbare!!! on japanin kielisen sanaston harjoittelusovellus. Sovelluksen käyttäjä voi harjoitella sanastoa joko japanista suomeen tai suomesta japaniin, ja valita haluamansa sanaluokat sekä harjoittelusession pituuden. Sanasto pohjautuu Helsingin yliopiston japanin kielen kurssien sanastoon. 
 
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittelu.md)
