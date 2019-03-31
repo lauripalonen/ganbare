@@ -1,17 +1,37 @@
-# Ohjelmistotekniikka, harjoitustyö
-## Tehtävät
-### Viikko 1
-[gitlog.txt](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+#Ganbare!!! -sanastotreeni
+Ganbare!!! -sanastotreeni on harjoittelusovellus japanin kielen sanastoa varten. Sanasto perustuu Helsingin Yliopiston japanin kielen kurssien sanastoon.  
 
-[komentorivi.txt](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
+## Dokumentaatio
+[Vaatimusmäärittely](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittelu.md)
+[Työaikakirjanpito](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
-### Viikko 2
-[viikon 2 laskarit](https://github.com/Mieskalmari/ot-harjoitustyo/tree/master/laskarit/viikko2)
+## Versiot
+*29.3.2014 (Nykyinen)*
+Raaka tekstikäyttöliittymärunko. Sovelluksella pystyy määrittelemään harjoittelusession pituuden ja vastaamaan session arpomiin kysymyksiin suomeksi. Sovellus ylläpitää tietoa oikeiden vastausten määrästä. Sanasto on tekstitiedostossa lexicon.txt. 
 
-[määrittelydokumentti](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittelu.md)
+Session pituutta lukuunottamatta sessiomäärittelyn muut kohdat (kysymyskieli, sanaluokat) eivät vaikuta vielä generoitavaan harjoittelusessioon. 
 
-[työaikakirjanpito](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
+## Komentorivitoiminnot
 
-### Viikko 3
-[viikon 3 laskarit](https://github.com/Mieskalmari/ot-harjoitustyo/tree/master/laskarit/viikko3)
+## Ohjelman suoritus
+Ohjelman voi suorittaa komennolla
+
+```
+mvn compile exec:java -Dexec.mainClass=ganbare_trainer.ui.Main
+```
+
+### Testaus
+Testit suoritetaan komennolla
+
+```
+mvn test
+```
+
+Testikattavuusraportti luodaan komennolla
+
+```
+mvn jacoco:report
+```
+
+Kattavuusraporttia voi tarkastella avamaalla selaimella tiedosto _target/site/jacoco/index.html_
 
