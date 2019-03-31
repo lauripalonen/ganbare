@@ -1,5 +1,5 @@
 # Ganbare!!! 
-Ganbare!!! on japanin kielisen sanaston harjoittelusovellus. Sovelluksen käyttäjä voi harjoitella sanastoa joko japanista suomeen tai suomesta japaniin, ja valita haluamansa sanaluokat sekä harjoittelusession pituuden. Sanasto pohjautuu Helsingin yliopiston japanin kielen kurssien sanastoon. 
+_Ganbare!!!_ on harjoittelusovellus japanin kielen sanastolle. Sovelluksen käyttäjä voi harjoitella sanastoa joko japanista suomeen tai suomesta japaniin, ja valita haluamansa sanaluokat sekä harjoittelusession pituuden. Sanasto pohjautuu Helsingin yliopiston japanin kielen kurssien sanastoon. 
 
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittelu.md)
@@ -9,7 +9,7 @@ Ganbare!!! on japanin kielisen sanaston harjoittelusovellus. Sovelluksen käytt�
 ## Versiot
 **29.3.2014 (Nykyinen)**
 
-Raaka tekstikäyttöliittymärunko. Sovelluksella pystyy määrittelemään harjoittelusession pituuden ja vastaamaan arvottuihin kysymyksiin suomeksi. Sovellus ylläpitää tietoa oikeiden vastausten määrästä. Sanasto on tekstitiedostossa _lexicon.txt_. 
+Raaka tekstikäyttöliittymärunko. Sovelluksella pystyy määrittelemään harjoittelusession pituuden ja vastaamaan generoituihin kysymyksiin suomeksi. Sovellus ylläpitää tietoa oikeiden vastausten määrästä. Sanasto on tekstitiedostossa _lexicon.txt_. 
 
 Kirjautumistiedot, sekä sessiomäärittelyn kysymyskieli ja sanaluokat eivät vielä toteuta mitään varsinaisia toiminnallisuuksia sovelluksessa. Sovelluksella on yksi testi joka testaa sanaston generoitumista.   
 
