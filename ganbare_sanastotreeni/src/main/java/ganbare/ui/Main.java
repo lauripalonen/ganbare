@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ganbare_trainer.ui;
-import ganbare_trainer.domain.GanbareService;
+package ganbare.ui;
+import ganbare.domain.GanbareService;
 
 /**
  *
