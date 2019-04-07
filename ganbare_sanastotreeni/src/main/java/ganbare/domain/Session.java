@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ganbare.domain;
 
-/**
- *
- * @author palolaur
- */
 import java.util.*;
 
 public class Session {
@@ -19,7 +10,7 @@ public class Session {
     private boolean substantives;
     private int length;
 
-    private int currentQuestion;
+    private int questionNum;
     private ArrayList<String> sessionLexicon;
     private int correctAnswers;
 
@@ -45,30 +36,18 @@ public class Session {
         return this.length;
     }
 
-    public boolean getVerbs() {
-        return this.verbs;
-    }
-
-    public boolean getAdjectives() {
-        return this.adjectives;
-    }
-
-    public boolean getSubstantives() {
-        return this.substantives;
-    }
-
     public String getQuestion() {
-        String[] words = sessionLexicon.get(currentQuestion).split(":");
-        
-        if(this.questionLanguage.equals("suomi")){
+        String[] words = sessionLexicon.get(questionNum).split(":");
+
+        if (this.questionLanguage.equals("suomi")) {
             return words[2];
         }
         return words[0];
     }
 
     public String getAnswer() {
-        String[] words = sessionLexicon.get(currentQuestion).split(":");
-        if(this.questionLanguage.equals("suomi")){
+        String[] words = sessionLexicon.get(questionNum).split(":");
+        if (this.questionLanguage.equals("suomi")) {
             return words[1];
         }
         return words[2];
@@ -76,8 +55,6 @@ public class Session {
     }
 
     public boolean correctAnswer(String userInput) {
-        System.out.println("Vastasit: " + userInput);
-        System.out.println("Oikea vastaus oli: " + getAnswer());
 
         if (userInput.toLowerCase().equals(getAnswer().toLowerCase())) {
             correctAnswers++;
@@ -92,9 +69,9 @@ public class Session {
     }
 
     public boolean incrementCounter() {
-        currentQuestion++;
+        questionNum++;
 
-        if (this.currentQuestion > this.length - 1) {
+        if (this.questionNum > this.length - 1) {
             return false;
         }
 
@@ -102,23 +79,22 @@ public class Session {
 
     }
 
-    public int currentQuestion() {
-        return currentQuestion;
+    public int getQuestionNum() {
+        return questionNum;
     }
-    
-    public String getFeedback(boolean correct, String userInput){
-        if (correct){
+
+    public String getFeedback(boolean correct, String userInput) {
+        if (correct) {
             return "Oikea vastaus!";
         }
-        
+
         return "Oikea vastaus oli: " + getAnswer()
                 + "\n Vastasit: " + userInput;
     }
 
-    @Override
-    public String toString() {
+    public String getReview() {
         return "Oikeita vastauksia: " + this.correctAnswers + "\n"
-                + "Kysymyksiä yhteensä: " + this.currentQuestion();
+                + "Kysymyksiä yhteensä: " + this.questionNum;
     }
 
 }
