@@ -17,6 +17,7 @@ public class GanbareService {
     private User user;
     private ArrayList<String> lexicon;
     private ArrayList<String> sessionLexicon;
+    private Session session;
 
     public GanbareService() {
         this.lexicon = new ArrayList<>();
@@ -43,22 +44,16 @@ public class GanbareService {
 
     }
 
-    public void newSession(int sessionLength) {
+    public String newSession(String language, boolean verbs, boolean adjectives, boolean substantives, int length) {
 
-        Collections.shuffle(this.lexicon);
-
-        ArrayList<String> session = new ArrayList<>();
-
-        for (int i = 0; i < sessionLength; i++) {
-            session.add(lexicon.get(i));
-        }
-
-        this.sessionLexicon = session;
+        this.session = new Session(language, verbs, adjectives, substantives, length);
+        this.session.prepareSessionLexicon(this.lexicon);
+        return this.session.getQuestion();
 
     }
 
-    public ArrayList<String> getSession() {
-        return this.sessionLexicon;
+    public Session getSession() {
+        return this.session;
     }
 
     public ArrayList<String> getLexicon() {
