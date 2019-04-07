@@ -7,4 +7,5 @@
 | 29.3. | 3    | Sovelluksen runko toimivalla tekstikäyttöliittymällä |
 | 31.3. | 1    | README:n päivitys |
 | 4.4.  | 4    | Pohja graafiselle käyttöliittymälle, toiminnot näkymien vaihtamiseen |
-| yht.  | 9    | | 
+| 6.4.  | 4    | Valikkotoimintojen kehittäminen, toimivan session luonti |
+| yht.  | 17   | | 
