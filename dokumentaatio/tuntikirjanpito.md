@@ -8,4 +8,5 @@
 | 31.3. | 1    | README:n päivitys |
 | 4.4.  | 4    | Pohja graafiselle käyttöliittymälle, toiminnot näkymien vaihtamiseen |
 | 6.4.  | 4    | Valikkotoimintojen kehittäminen, toimivan session luonti |
-| yht.  | 17   | | 
+| 7.4.  | 3    | Näkymäelementtien päivittäminen, koodin ja tiedostojen putsaus |
+| yht.  | 20   | | 
