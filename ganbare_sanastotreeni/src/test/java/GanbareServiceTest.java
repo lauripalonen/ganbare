@@ -30,11 +30,32 @@ public class GanbareServiceTest {
 
      @Test
      public void prepareLexiconFormsAnArrayWithItems(){
-         service.prepareLexicon();
+         service.prepareLexicon("lexicon.txt");
          
          boolean array = service.getLexicon().isEmpty();
          
          assertFalse(array);
          
      }
+     
+     @Test
+     public void prepareLexiconThrowsErrorIfUnreadableFile(){
+         boolean output = service.prepareLexicon("invalidFile");
+         
+         assertEquals(false, output);
+         
+     }
+     
+     @Test
+     public void newSessionCanBeCreated(){
+         service.prepareLexicon("lexicon.txt");
+         service.newSession("suomi", true, true, true, 5);
+         
+         
+         String session = service.getSession().toString();
+         
+         assertEquals("Sessiomäärittelyt: \nKyselykieli: suomi\nVerbit: true\nAdjektiivit: true\nSubstantiivit: true\nSession pituus: 5", session);
+         
+     }
+     
 }
