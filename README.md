@@ -6,12 +6,8 @@ _Ganbare!!!_ on harjoittelusovellus japanin kielen sanastolle. Sovelluksen käyt
 
 [Työaikakirjanpito](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
-## Versiot
-**29.3.2014 (Nykyinen)**
-
-Raaka tekstikäyttöliittymärunko. Sovelluksella pystyy määrittelemään harjoittelusession pituuden ja vastaamaan generoituihin kysymyksiin suomeksi. Sovellus ylläpitää tietoa oikeiden vastausten määrästä. Sanasto on tekstitiedostossa _lexicon.txt_. 
-
-Kirjautumistiedot, sekä sessiomäärittelyn kysymyskieli ja sanaluokat eivät vielä toteuta mitään varsinaisia toiminnallisuuksia sovelluksessa. Sovelluksella on yksi testi joka testaa sanaston generoitumista.   
+## Tuorein versio - 08.04.2019
+Sovelluksen käyttöliittymä on päivitetty tekstikäyttöliittymästä graafiseen. Kirjautumistoiminnallisuuksia ei vielä ole (sovelluksessa pääsee eteenpäin painamalla _kirjaudu_ tai _rekisteriöidy_ -nappeja). Valikkonäkymässä harjoittelukielen ja sessiopituuden valinta vaikuttavat generoitavaan sessioon (sanaluokat eivät vielä toimi). Sovellus pitää yllä oikeiden vastausten määrää ja antaa session päätteeksi siihen perustuvan palautteen. Palauteruudusta voi palata valikkonäkymään, tai poistua sovelluksesta.  
 
 ## Komentorivitoiminnot
 
@@ -19,7 +15,7 @@ Kirjautumistiedot, sekä sessiomäärittelyn kysymyskieli ja sanaluokat eivät v
 Ohjelman voi suorittaa komennolla
 
 ```
-mvn compile exec:java -Dexec.mainClass=ganbare_trainer.ui.Main
+mvn compile exec:java -Dexec.mainClass=ganbare.ui.GanbareUi
 ```
 
 ### Testaus
