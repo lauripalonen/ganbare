@@ -20,6 +20,8 @@ public class Session {
         this.adjectives = adjectives;
         this.substantives = substantives;
         this.length = length;
+
+        this.sessionLexicon = new ArrayList<>();
     }
 
     public void prepareSessionLexicon(ArrayList<String> lexicon) {
@@ -37,12 +39,20 @@ public class Session {
     }
 
     public String getQuestion() {
+        if (this.sessionLexicon.isEmpty()) {
+            throw new NullPointerException("Sanastossa ei ole sanoja!");
+        }
+
         String[] words = sessionLexicon.get(questionNum).split(":");
 
         if (this.questionLanguage.equals("suomi")) {
             return words[2];
         }
         return words[0];
+    }
+
+    public ArrayList<String> getSessionLexicon() {
+        return this.sessionLexicon;
     }
 
     public String getAnswer() {
@@ -69,11 +79,12 @@ public class Session {
     }
 
     public boolean incrementCounter() {
-        questionNum++;
 
-        if (this.questionNum > this.length - 1) {
+        if (this.questionNum >= this.length - 1) {
             return false;
         }
+
+        questionNum++;
 
         return true;
 
@@ -89,12 +100,23 @@ public class Session {
         }
 
         return "Oikea vastaus oli: " + getAnswer()
-                + "\n Vastasit: " + userInput;
+                + "\nVastasit: " + userInput;
     }
 
     public String getReview() {
         return "Oikeita vastauksia: " + this.correctAnswers + "\n"
                 + "Kysymyksiä yhteensä: " + this.questionNum;
+    }
+
+    @Override
+    public String toString() {
+        return "Sessiomäärittelyt: \n"
+                + "Kyselykieli: " + this.questionLanguage + "\n"
+                + "Verbit: " + this.verbs + "\n"
+                + "Adjektiivit: " + this.adjectives + "\n"
+                + "Substantiivit: " + this.substantives + "\n"
+                + "Session pituus: " + this.length;
+
     }
 
 }

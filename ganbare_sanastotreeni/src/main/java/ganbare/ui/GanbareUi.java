@@ -31,7 +31,7 @@ public class GanbareUi extends Application {
     public void init() throws Exception {
         this.ganbareService = new GanbareService();
 
-        ganbareService.prepareLexicon();
+        ganbareService.prepareLexicon("lexicon.txt");
 
     }
 
@@ -199,7 +199,7 @@ public class GanbareUi extends Application {
         Label sessionLengthLabel = new Label("Session pituus: ");
         TextField sessionLengthField = new TextField();
         sessionLengthField.setPrefWidth(50);
-        Label wordsLabel = new Label("sanaa (min: 5, max: " + ganbareService.getLexicon().size() + ")");
+        Label wordsLabel = new Label("sanaa (min: 1, max: " + ganbareService.getLexicon().size() + ")");
         sessionLengthPane.getChildren().addAll(sessionLengthLabel, sessionLengthField, wordsLabel);
 
         Button beginButton = new Button("Aloita");
@@ -223,7 +223,7 @@ public class GanbareUi extends Application {
                 Boolean substantives = subsBox.isSelected();
                 int sessionLength = Integer.parseInt(sessionLengthField.getText());
 
-                if ((verbs == false && adjectives == false && substantives == false) || sessionLength < 5) {
+                if ((verbs == false && adjectives == false && substantives == false) || sessionLength < 1) {
                     announcementLabel.setText("Valitse vähintään yksi sanaluokka \n ja aseta sanojen määräksi 5-18");
 
                 } else {

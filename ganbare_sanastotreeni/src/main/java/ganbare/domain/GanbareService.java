@@ -13,14 +13,18 @@ public class GanbareService {
 
     }
 
-    public void prepareLexicon() {
-        try (Scanner fileScanner = new Scanner(new File("lexicon.txt"))) {
+    public boolean prepareLexicon(String filename) {
+        try (Scanner fileScanner = new Scanner(new File(filename))) {
             while (fileScanner.hasNextLine()) {
 
                 this.lexicon.add(fileScanner.nextLine());
+
             }
+            return true;
+
         } catch (Exception e) {
             System.out.println("Virhe: " + e.getMessage());
+            return false;
         }
 
     }
