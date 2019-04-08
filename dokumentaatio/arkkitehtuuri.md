@@ -3,7 +3,7 @@
 ## Rakenne
 Toistaiseksi sovelluksella on hyvin yksinkertainen, kaksitasoisen pakkausrakenne: 
 
-<img src="https://raw.githubusercontent.com/Mieskalmari/ot-harjoitustyo/master/dokumentaatio/kuvat/pakkausrakenne.jpg>
+<img src="https://raw.githubusercontent.com/Mieskalmari/ot-harjoitustyo/master/dokumentaatio/kuvat/pakkausrakenne.jpg">
 
 Rakenne saa lisää kerroksia tulevaisuudessa, kun sovellukseen lisätään käyttäjätoiminnallisuudet ja sanastolle luodaan oma tietokanta.
 
@@ -21,6 +21,6 @@ Näkymät on toteutettu omina [Scene](https://docs.oracle.com/javase/8/javafx/ap
 [GanbareService](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/ganbare_sanastotreeni/src/main/java/ganbare/domain/GanbareService.java)-luokka vastaa sovelluslogiikasta. Luokka toteuttaa käyttöliittymän vaatimat toiminnot ja esimerkiksi luo aina uuden harjoittelusession käyttäjälle [Session](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/ganbare_sanastotreeni/src/main/java/ganbare/domain/Session.java)-luokasta. Session-luokka generoi määrittelyjensä mukaisen sessiokohtaisen sanaston tietokannassa olevasta pääsanastosta. 
 
 Sovelluksen alustava pakkauskaavio:
-<img src="https://raw.githubusercontent.com/Mieskalmari/ot-harjoitustyo/master/dokumentaatio/kuvat/pakkauskaavio.jpg>
+<img src="https://raw.githubusercontent.com/Mieskalmari/ot-harjoitustyo/master/dokumentaatio/kuvat/pakkauskaavio.jpg">
 
-Kaaviossa harmaalla on sovelluksen luokat ja pakkaukset, joita ei ole vielä toteutettu. 
+Kaavion harmaat luokat ja pakkaukset ovat vielä toteuttamattomia.  
