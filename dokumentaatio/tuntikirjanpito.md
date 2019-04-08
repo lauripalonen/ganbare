@@ -9,4 +9,5 @@
 | 4.4.  | 4    | Pohja graafiselle käyttöliittymälle, toiminnot näkymien vaihtamiseen |
 | 6.4.  | 4    | Valikkotoimintojen kehittäminen, toimivan session luonti |
 | 7.4.  | 3    | Näkymäelementtien päivittäminen, koodin ja tiedostojen putsaus |
+| 8.4.  | 3    | JUnit-Testien luonti |
 | yht.  | 20   | | 
