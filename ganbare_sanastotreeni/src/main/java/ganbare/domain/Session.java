@@ -105,7 +105,7 @@ public class Session {
 
     public String getReview() {
         return "Oikeita vastauksia: " + this.correctAnswers + "\n"
-                + "Kysymyksiä yhteensä: " + this.questionNum;
+                + "Kysymyksiä yhteensä: " + (this.questionNum +1);
     }
 
     @Override
