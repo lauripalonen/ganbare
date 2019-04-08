@@ -21,6 +21,7 @@ Näkymät on toteutettu omina [Scene](https://docs.oracle.com/javase/8/javafx/ap
 [GanbareService](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/ganbare_sanastotreeni/src/main/java/ganbare/domain/GanbareService.java)-luokka vastaa sovelluslogiikasta. Luokka toteuttaa käyttöliittymän vaatimat toiminnot ja esimerkiksi luo aina uuden harjoittelusession käyttäjälle [Session](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/ganbare_sanastotreeni/src/main/java/ganbare/domain/Session.java)-luokasta. Session-luokka generoi määrittelyjensä mukaisen sessiokohtaisen sanaston tietokannassa olevasta pääsanastosta. 
 
 Sovelluksen alustava pakkauskaavio:
+
 <img src="https://raw.githubusercontent.com/Mieskalmari/ot-harjoitustyo/master/dokumentaatio/kuvat/pakkauskaavio.jpg">
 
 Kaavion harmaat luokat ja pakkaukset ovat vielä toteuttamattomia.  
