@@ -10,4 +10,5 @@
 | 6.4.  | 4    | Valikkotoimintojen kehittäminen, toimivan session luonti |
 | 7.4.  | 3    | Näkymäelementtien päivittäminen, koodin ja tiedostojen putsaus |
 | 8.4.  | 5    | JUnit-Testien luonti, arkkitehtuurikuvauksen luonnostelu |
-| yht.  | 25   | | 
+| 11.4. | 2    | Sanastotietokannan alustus |
+| yht.  | 27   | | 
