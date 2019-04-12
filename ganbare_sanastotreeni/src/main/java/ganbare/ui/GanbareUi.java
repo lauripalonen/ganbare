@@ -1,6 +1,7 @@
 package ganbare.ui;
 
 import ganbare.domain.GanbareService;
+import Dao.LexiconDao;
 
 import javafx.geometry.Insets;
 import javafx.application.Application;
@@ -123,6 +124,14 @@ public class GanbareUi extends Application {
     public void start(Stage primaryStage) {
 
         this.primaryStage = primaryStage;
+        
+        LexiconDao dao = new LexiconDao();
+        
+        try {
+            dao.read(1);
+        } catch (Exception e){
+            System.out.println("Virhe: " + e);
+        }
 
         //Login scene
         VBox loginPane = new VBox(10);
