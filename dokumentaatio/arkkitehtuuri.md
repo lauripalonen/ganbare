@@ -1,11 +1,11 @@
 # Arkkitehtuurikuvaus
 
 ## Rakenne
-Toistaiseksi sovelluksella on hyvin yksinkertainen, kaksitasoisen pakkausrakenne: 
+Sovelluksella on toistaiseksi kolmitasoinen pakkausrakenne: 
 
 <img src="https://raw.githubusercontent.com/Mieskalmari/ot-harjoitustyo/master/dokumentaatio/kuvat/pakkausrakenne.jpg">
 
-Rakenne saa lisää kerroksia tulevaisuudessa, kun sovellukseen lisätään käyttäjätoiminnallisuudet ja sanastolle luodaan oma tietokanta.
+Ui-pakkaus sisältää käyttöliittymän kokoavan koodin. Domain-pakkaus pitää sisällään sovelluslogiikasta vastaava nkoodin ja käsiteluokkia. Dao-pakkauksessa on koodia joka vastaa tietokannan kanssa kommunikoimisesta. 
 
 ## Käyttöliittymä
 
