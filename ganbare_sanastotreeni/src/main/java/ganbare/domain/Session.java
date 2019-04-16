@@ -4,74 +4,58 @@ import java.util.*;
 
 public class Session {
 
-    private String questionLanguage;
-    private boolean verbs;
-    private boolean adjectives;
-    private boolean substantives;
-    private int length;
+    private ArrayDeque<String> questions;
+    private ArrayDeque<String> answers;
 
-    private int questionNum;
-    private ArrayList<String> sessionLexicon;
+    private int sessionLength;
+
+    private int currentQuestionNum;
     private int correctAnswers;
+    private int totalAnswers;
 
-    public Session(String language, boolean verbs, boolean adjectives, boolean substantives, int length) {
-        this.questionLanguage = language;
-        this.verbs = verbs;
-        this.adjectives = adjectives;
-        this.substantives = substantives;
-        this.length = length;
+    private String currentQ = "";
+    private String currentA = "";
 
-        this.sessionLexicon = new ArrayList<>();
-    }
+    public Session(String language, ArrayList<String[]> lexicon, int sessionLength) {
+        questions = new ArrayDeque<>();
+        answers = new ArrayDeque<>();
 
-    public void prepareSessionLexicon(ArrayList<String> lexicon) {
-        this.sessionLexicon = new ArrayList<>();
+        this.sessionLength = sessionLength;
+
         Collections.shuffle(lexicon);
 
-        for (int i = 0; i < this.length; i++) {
-            this.sessionLexicon.add(lexicon.get(i));
+        for (int i = 0; i < sessionLength; i++) {
+            String[] word = lexicon.get(i);
+
+            if (language.equals("suomi")) {
+                questions.add(word[0]);
+                answers.add(word[2]);
+            } else {
+                questions.add(word[1]);
+                answers.add(word[0]);
+            }
         }
 
     }
 
     public int getLength() {
-        return this.length;
+        return this.sessionLength;
+    }
+
+    public ArrayDeque<String> getQuestionStack() {
+        return this.questions;
+    }
+
+    public ArrayDeque<String> getAnswerStack() {
+        return this.answers;
     }
 
     public String getQuestion() {
-        if (this.sessionLexicon.isEmpty()) {
-            throw new NullPointerException("Sanastossa ei ole sanoja!");
-        }
 
-        String[] words = sessionLexicon.get(questionNum).split(":");
+        this.currentQ = questions.poll();
+        this.currentA = answers.poll();
+        return this.currentQ;
 
-        if (this.questionLanguage.equals("suomi")) {
-            return words[2];
-        }
-        return words[0];
-    }
-
-    public ArrayList<String> getSessionLexicon() {
-        return this.sessionLexicon;
-    }
-
-    public String getAnswer() {
-        String[] words = sessionLexicon.get(questionNum).split(":");
-        if (this.questionLanguage.equals("suomi")) {
-            return words[1];
-        }
-        return words[2];
-
-    }
-
-    public boolean correctAnswer(String userInput) {
-
-        if (userInput.toLowerCase().equals(getAnswer().toLowerCase())) {
-            correctAnswers++;
-            return true;
-        }
-
-        return false;
     }
 
     public int getCorrectAnswers() {
@@ -79,44 +63,43 @@ public class Session {
     }
 
     public boolean incrementCounter() {
-
-        if (this.questionNum >= this.length - 1) {
+        if (currentQuestionNum >= sessionLength - 1) {
             return false;
         }
-
-        questionNum++;
-
+        currentQuestionNum++;
         return true;
-
     }
 
-    public int getQuestionNum() {
-        return questionNum;
+    public String getCurrentQuestion() {
+        return this.currentQ;
     }
 
-    public String getFeedback(boolean correct, String userInput) {
-        if (correct) {
+    public String getCurrentAnswer() {
+        return this.currentA;
+    }
+
+    public int getCurrentQuestionNum() {
+        return currentQuestionNum;
+    }
+
+    public String getFeedback(String userInput) {
+        totalAnswers++;
+
+        String input = userInput.toLowerCase().trim();
+        String answer = this.currentA.toLowerCase().trim();
+
+        if (input.equals(answer)) {
+            correctAnswers++;
             return "Oikea vastaus!";
         }
 
-        return "Oikea vastaus oli: " + getAnswer()
+        return "Oikea vastaus oli: " + this.currentA
                 + "\nVastasit: " + userInput;
     }
 
     public String getReview() {
         return "Oikeita vastauksia: " + this.correctAnswers + "\n"
-                + "Kysymyksiä yhteensä: " + (this.questionNum +1);
-    }
-
-    @Override
-    public String toString() {
-        return "Sessiomäärittelyt: \n"
-                + "Kyselykieli: " + this.questionLanguage + "\n"
-                + "Verbit: " + this.verbs + "\n"
-                + "Adjektiivit: " + this.adjectives + "\n"
-                + "Substantiivit: " + this.substantives + "\n"
-                + "Session pituus: " + this.length;
-
+                + "Kysymyksiä yhteensä: " + (this.totalAnswers);
     }
 
 }

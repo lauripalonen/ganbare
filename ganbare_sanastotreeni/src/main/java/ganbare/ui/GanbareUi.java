@@ -1,7 +1,6 @@
 package ganbare.ui;
 
 import ganbare.domain.GanbareService;
-import Dao.LexiconDao;
 
 import javafx.geometry.Insets;
 import javafx.application.Application;
@@ -32,106 +31,12 @@ public class GanbareUi extends Application {
     public void init() throws Exception {
         this.ganbareService = new GanbareService();
 
-        ganbareService.prepareLexicon("lexicon.txt");
-
-    }
-
-    public Scene reviewScene() {
-        VBox reviewPane = new VBox(10);
-        BorderPane textPane = new BorderPane();
-        HBox buttonPane = new HBox(10);
-
-        Label reviewLabel = new Label(ganbareService.getSession().getReview());
-        Button exitButton = new Button("Sulje");
-        Button toOptionsButton = new Button("Alkuvalikkoon");
-
-        exitButton.setOnAction(e -> Platform.exit());
-        toOptionsButton.setOnAction(e -> primaryStage.setScene(optionsScene));
-
-        textPane.setCenter(reviewLabel);
-        buttonPane.getChildren().addAll(toOptionsButton, exitButton);
-        buttonPane.setAlignment(Pos.CENTER);
-
-        reviewPane.getChildren().addAll(textPane, buttonPane);
-
-        Scene testiscene = new Scene(reviewPane, 400, 300);
-
-        return testiscene;
-    }
-
-    public Scene sessionScene() {
-        VBox sessionPane = new VBox(10);
-        BorderPane feedbackPane = new BorderPane();
-
-        Label questionLabel = new Label(ganbareService.getSession().getQuestion());
-        Label questionNumLabel = new Label("1/" + ganbareService.getSession().getLength());
-        TextField answerField = new TextField();
-        Label feedbackLabel = new Label();
-        feedbackPane.setCenter(feedbackLabel);
-        feedbackLabel.setAlignment(Pos.CENTER);
-        answerField.setPrefWidth(150);
-
-        Button answerButton = new Button("Vastaa");
-        Button toOptionsButton = new Button("Alkuvalikkoon");
-
-        BorderPane currentPane = new BorderPane();
-        currentPane.setRight(questionNumLabel);
-
-        BorderPane questionPane = new BorderPane();
-        questionPane.setCenter(questionLabel);
-
-        HBox answerPane = new HBox(10);
-        answerPane.getChildren().add(answerField);
-        answerPane.setAlignment(Pos.CENTER);
-
-        BorderPane answerButtonPane = new BorderPane();
-        answerButtonPane.setCenter(answerButton);
-        
-        answerButton.setDefaultButton(true);
-        
-        answerButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                boolean correct = ganbareService.getSession().correctAnswer(answerField.getText());
-                String feedback = ganbareService.getSession().getFeedback(correct, answerField.getText());
-
-                if (ganbareService.getSession().incrementCounter()) {
-
-                    feedbackLabel.setText(feedback);
-                    answerField.clear();
-                    questionNumLabel.setText((ganbareService.getSession().getQuestionNum() + 1) + "/" + ganbareService.getSession().getLength());
-                    questionLabel.setText(ganbareService.getSession().getQuestion());
-                } else {
-                    primaryStage.setScene(reviewScene());
-                }
-            }
-        });
-
-        BorderPane optionsButtonPane = new BorderPane();
-        optionsButtonPane.setRight(toOptionsButton);
-
-        toOptionsButton.setOnAction(e -> primaryStage.setScene(optionsScene));
-
-        sessionPane.getChildren().addAll(currentPane, questionPane, answerPane, answerButtonPane, optionsButtonPane, feedbackPane);
-
-        Scene sessionScene = new Scene(sessionPane, 400, 300);
-
-        return sessionScene;
     }
 
     @Override
     public void start(Stage primaryStage) {
 
         this.primaryStage = primaryStage;
-        
-        LexiconDao dao = new LexiconDao();
-        
-        try {
-            dao.read(1);
-        } catch (Exception e){
-            System.out.println("Virhe: " + e);
-        }
 
         //Login scene
         VBox loginPane = new VBox(10);
@@ -200,15 +105,16 @@ public class GanbareUi extends Application {
         languagePane.getChildren().addAll(fromLanguageLabel, directionButton, toLanguageLabel);
 
         Label wordClassLabel = new Label("Sanaluokat:");
+        CheckBox subsBox = new CheckBox("Subsantiivit");
         CheckBox verbBox = new CheckBox("Verbit");
         CheckBox adjBox = new CheckBox("Adjektiivit");
-        CheckBox subsBox = new CheckBox("Subsantiivit");
-        wordClassPane.getChildren().addAll(verbBox, adjBox, subsBox);
+        CheckBox adverbBox = new CheckBox("Adverbit");
+        wordClassPane.getChildren().addAll(subsBox, adjBox, verbBox, adverbBox);
 
         Label sessionLengthLabel = new Label("Session pituus: ");
         TextField sessionLengthField = new TextField();
         sessionLengthField.setPrefWidth(50);
-        Label wordsLabel = new Label("sanaa (min: 1, max: " + ganbareService.getLexicon().size() + ")");
+        Label wordsLabel = new Label("(max: 0 sanaa)");
         sessionLengthPane.getChildren().addAll(sessionLengthLabel, sessionLengthField, wordsLabel);
 
         Button beginButton = new Button("Aloita");
@@ -226,22 +132,20 @@ public class GanbareUi extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                String language = fromLanguageLabel.getText();
-                Boolean verbs = verbBox.isSelected();
-                Boolean adjectives = adjBox.isSelected();
-                Boolean substantives = subsBox.isSelected();
                 int sessionLength = Integer.parseInt(sessionLengthField.getText());
+                int maxLength = ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected());
 
-                if ((verbs == false && adjectives == false && substantives == false) || sessionLength < 1) {
-                    announcementLabel.setText("Valitse vähintään yksi sanaluokka \n ja aseta sanojen määräksi 5-18");
+                if ((!subsBox.isSelected() && !adjBox.isSelected() && !verbBox.isSelected() && !adverbBox.isSelected()) || sessionLength < 1 || sessionLength > maxLength) {
+                    announcementLabel.setText("Valitse vähintään yksi sanaluokka \n ja aseta validi sanamäärä");
 
                 } else {
 
-                    ganbareService.newSession(language, verbs, adjectives, substantives, sessionLength);
+                    ganbareService.newSession(fromLanguageLabel.getText(), subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected(), sessionLength);
 
-                    verbBox.setSelected(false);
-                    adjBox.setSelected(false);
                     subsBox.setSelected(false);
+                    adjBox.setSelected(false);
+                    verbBox.setSelected(false);
+                    adverbBox.setSelected(false);
                     sessionLengthField.clear();
 
                     primaryStage.setScene(sessionScene());
@@ -249,7 +153,22 @@ public class GanbareUi extends Application {
             }
 
         });
-
+        
+        subsBox.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent event){
+                
+                int wordCount = ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected());
+                wordsLabel.setText("(max: " + wordCount + " sanaa)");
+                
+            }
+        });
+        
+        adjBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected())+ " sanaa)"));
+        verbBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected())+ " sanaa)"));
+        adverbBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected())+ " sanaa)"));
+        
         optionsPane.getChildren().addAll(announcementPane, questionDirectionLabel, languagePane, wordClassLabel,
                 wordClassPane, sessionLengthPane, optionButtonsPane);
 
@@ -260,7 +179,95 @@ public class GanbareUi extends Application {
         primaryStage.show();
     }
 
+    public Scene sessionScene() {
+        VBox sessionPane = new VBox(10);
+        BorderPane feedbackPane = new BorderPane();
+
+        Label questionLabel = new Label(ganbareService.getQuestion());
+        Label questionNumLabel = new Label("kysymys: 1/" + ganbareService.getSessionLength());
+        TextField answerField = new TextField();
+        Label feedbackLabel = new Label();
+        feedbackPane.setCenter(feedbackLabel);
+        feedbackLabel.setAlignment(Pos.CENTER);
+        answerField.setPrefWidth(150);
+
+        Button answerButton = new Button("Vastaa");
+        Button toOptionsButton = new Button("Alkuvalikkoon");
+        Button quitButton = new Button("Lopeta");
+
+        BorderPane currentPane = new BorderPane();
+        currentPane.setRight(questionNumLabel);
+
+        BorderPane questionPane = new BorderPane();
+        questionPane.setCenter(questionLabel);
+
+        HBox answerPane = new HBox(20);
+        answerPane.getChildren().add(answerField);
+        answerPane.setAlignment(Pos.CENTER);
+
+        HBox ButtonPane = new HBox(10);
+        ButtonPane.getChildren().addAll(answerButton, toOptionsButton, quitButton);
+        ButtonPane.setAlignment(Pos.CENTER);
+
+        answerButton.setDefaultButton(true);
+
+        answerButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                String feedback = ganbareService.getFeedback(answerField.getText());
+                String nextQuestion = ganbareService.nextQuestion();
+                
+                if (nextQuestion != null) {
+
+                    feedbackLabel.setText(feedback);
+                    answerField.clear();
+                    questionNumLabel.setText("kysymys: " + (ganbareService.getCurrentQuestionNum()) + "/" + ganbareService.getSessionLength());
+                    questionLabel.setText(nextQuestion);
+
+                } else {
+                    primaryStage.setScene(reviewScene());
+                }
+            }
+        });
+
+        toOptionsButton.setOnAction(e -> primaryStage.setScene(optionsScene));
+        
+        quitButton.setOnAction(e -> primaryStage.setScene(reviewScene()));
+
+        sessionPane.getChildren().addAll(currentPane, questionPane, answerPane, ButtonPane, feedbackPane);
+
+        Scene sessionScene = new Scene(sessionPane, 400, 300);
+
+        return sessionScene;
+    }
+
+    public Scene reviewScene() {
+        VBox reviewPane = new VBox(10);
+        BorderPane textPane = new BorderPane();
+        HBox buttonPane = new HBox(10);
+
+        Label reviewLabel = new Label(ganbareService.getSessionReview());
+        Button exitButton = new Button("Sulje");
+        Button toOptionsButton = new Button("Alkuvalikkoon");
+
+        exitButton.setOnAction(e -> Platform.exit());
+        toOptionsButton.setOnAction(e -> primaryStage.setScene(optionsScene));
+
+        textPane.setCenter(reviewLabel);
+        buttonPane.getChildren().addAll(toOptionsButton, exitButton);
+        buttonPane.setAlignment(Pos.CENTER);
+
+        reviewPane.getChildren().addAll(textPane, buttonPane);
+
+        Scene testiscene = new Scene(reviewPane, 400, 300);
+
+        return testiscene;
+    }
+
     public static void main(String[] args) {
+
         launch(args);
     }
 
