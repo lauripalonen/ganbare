@@ -1,43 +1,67 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Dao;
+package dao;
 
-import java.util.*;
 import java.sql.*;
+import java.util.*;
+import ganbare.domain.SqlParameters;
 
-/**
- *
- * @author palolaur
- */
 public class LexiconDao {
 
-    public String read(Integer key) throws SQLException {
+    private ArrayList<String[]> lexicon;
+
+    public ArrayList<String[]> createLexicon(SqlParameters sqlParams) throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon.db", "sa", "");
 
-        PreparedStatement stmt = connection.prepareStatement("SELECT finnish, kana FROM Lexicon WHERE id = ?");
-        
-        stmt.setInt(1, key);
-        
+        PreparedStatement stmt = connection.prepareStatement("SELECT id, finnish, kana, romaji FROM Lexicon WHERE class = ? OR class = ? OR class = ? OR class = ?");
+
+        stmt.setInt(1, sqlParams.getSubstantives());
+        stmt.setInt(2, sqlParams.getAdjectives());
+        stmt.setInt(3, sqlParams.getVerbs());
+        stmt.setInt(4, sqlParams.getAdverbs());
+
         ResultSet rs = stmt.executeQuery();
-        
-        if (!rs.next()){
-            return null;
+
+        this.lexicon = new ArrayList<>();
+
+        while (rs.next()) {
+            String[] word = new String[3];
+            word[0] = rs.getString("finnish");
+            word[1] = rs.getString("kana");
+            word[2] = rs.getString("romaji");
+
+            this.lexicon.add(word);
         }
-        
-        String word = rs.getString("finnish");
-        String translation = rs.getString("kana");
-        
-        stmt.close();
-        rs.close();
-        connection.close();
-        
-        System.out.println(word + ": " + translation);
-        
-        return word + ": " + translation;
-        
+
+        return this.lexicon;
+
+    }
+
+    public ArrayList<String[]> getWords() {
+        return this.lexicon;
+    }
+
+    public int totalWordCount(SqlParameters sqlParams) throws SQLException {
+
+        Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon.db", "sa", "");
+
+        PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(*) FROM Lexicon WHERE class = ? OR class = ? OR class = ? OR class = ?;");
+
+        stmt.setInt(1, sqlParams.getSubstantives());
+        stmt.setInt(2, sqlParams.getAdjectives());
+        stmt.setInt(3, sqlParams.getVerbs());
+        stmt.setInt(4, sqlParams.getAdverbs());
+
+        ResultSet rs = stmt.executeQuery();
+
+        int wordCount = 0;
+
+        while (rs.next()) {
+
+            wordCount = rs.getInt(1);
+
+        }
+
+        return wordCount;
+
     }
 
 }
