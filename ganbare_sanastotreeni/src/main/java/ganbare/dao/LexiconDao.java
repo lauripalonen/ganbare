@@ -1,4 +1,4 @@
-package dao;
+package ganbare.dao;
 
 import java.sql.*;
 import java.util.*;

@@ -1,6 +1,6 @@
 package ganbare.domain;
 
-import dao.LexiconDao;
+import ganbare.dao.LexiconDao;
 
 import java.sql.SQLException;
 import java.util.*;
