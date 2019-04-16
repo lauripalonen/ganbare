@@ -24,4 +24,16 @@ Sovelluksen alustava pakkauskaavio:
 
 <img src="https://raw.githubusercontent.com/Mieskalmari/ot-harjoitustyo/master/dokumentaatio/kuvat/pakkauskaavio.jpg">
 
-Kaavion harmaat luokat ja pakkaukset ovat vielä toteuttamattomia.  
+Kaavion harmaat luokat ja pakkaukset ovat vielä toteuttamattomia. 
+
+## Toiminnallisuudet
+
+### Kysymykseen vastaaminen
+
+Oheinen sekvenssikaavio esittää mitä sovelluslogiikassa tapahtuu käyttäjän vastatessa kysymykseen: 
+
+<img src="https://raw.githubusercontent.com/Mieskalmari/ot-harjoitustyo/master/dokumentaatio/kuvat/answersequence.png">
+
+Kaaviossa ollaan tilanteessa, jossa käyttäjällä on jo edessään ensimmäinen kysymys. Kirjoitettuaan vastauksen vastauskenttään ja painettuaan _vastaa_ nappia, käyttöliittymä lähettää ganbareService-luokalle pyynnön tarkistuttaa vastauksen oikeellisuus. Luokka lähettää pyynnön edelleen kyseisestä harjoittelusessiota ylläpitävälle Session-luokalle, joka toteuttaa tarvittavat vertailut ja palauttaa palautteen ganbareServicen kautta takaisin käyttöliittymälle.
+
+Samaa logiikkaa seuraten käyttöliittymä pyytää uutta kysymystä, jonka ganbareService välittää Session-luokalta. Käyttöliittymä asettaa uuden kysymyksen käyttäjälle, ja sykli voi alkaa alusta.
