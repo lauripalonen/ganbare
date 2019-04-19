@@ -9,7 +9,9 @@ public class LexiconDao {
     private ArrayList<String[]> lexicon;
 
     public ArrayList<String[]> createLexicon(SqlParameters sqlParams) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon.db", "sa", "");
+        Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
+        
+        
 
         PreparedStatement stmt = connection.prepareStatement("SELECT id, finnish, kana, romaji FROM Lexicon WHERE class = ? OR class = ? OR class = ? OR class = ?");
 
@@ -31,6 +33,11 @@ public class LexiconDao {
             this.lexicon.add(word);
         }
 
+        stmt.close();
+        rs.close();
+
+        connection.close();
+
         return this.lexicon;
 
     }
@@ -41,7 +48,7 @@ public class LexiconDao {
 
     public int totalWordCount(SqlParameters sqlParams) throws SQLException {
 
-        Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon.db", "sa", "");
+        Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
 
         PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(*) FROM Lexicon WHERE class = ? OR class = ? OR class = ? OR class = ?;");
 
@@ -60,8 +67,36 @@ public class LexiconDao {
 
         }
 
+        stmt.close();
+        rs.close();
+
+        connection.close();
+
         return wordCount;
 
+    }
+    
+    public void testConnection() throws SQLException{
+        
+        Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
+        System.out.println("Connection established to: " + connection.getCatalog());
+        System.out.println("URL: " + connection.getMetaData());
+        System.out.println("");
+        
+        PreparedStatement stmt = connection.prepareStatement("SHOW TABLES");
+        
+        ResultSet rs = stmt.executeQuery();
+        
+        System.out.println("AVAILABLE TABLES: ");
+        while (rs.next()) {
+            
+            System.out.println(rs.getString(1));
+        }
+        
+        rs.close();
+        stmt.close();
+        connection.close();
+        
     }
 
 }

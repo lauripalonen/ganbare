@@ -12,6 +12,12 @@ public class GanbareService {
 
     public GanbareService() {
         this.lexiconDao = new LexiconDao();
+        
+        try {
+        this.lexiconDao.testConnection();
+        } catch (Exception e){
+            System.out.println("Virhe: " + e);
+        }
 
     }
 
@@ -70,6 +76,7 @@ public class GanbareService {
     }
 
     public int getTotalWords(boolean substantives, boolean adjectives, boolean verbs, boolean adverbs) {
+        
         SqlParameters sqlParams = new SqlParameters(substantives, adjectives, verbs, adverbs);
 
         try {
@@ -83,5 +90,6 @@ public class GanbareService {
     public LexiconDao getLexiconDao() {
         return this.lexiconDao;
     }
+    
 
 }
