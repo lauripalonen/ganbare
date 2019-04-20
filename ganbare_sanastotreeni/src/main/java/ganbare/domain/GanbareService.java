@@ -9,12 +9,26 @@ public class GanbareService {
 
     private Session session;
     private LexiconDao lexiconDao;
+    
+    private int substantives;
+    private int adjectives;
+    private int verbs;
+    private int adverbs;
 
     public GanbareService() {
         this.lexiconDao = new LexiconDao();
         
+//        try {
+//        this.lexiconDao.testConnection();
+//        } catch (Exception e){
+//            System.out.println("Virhe: " + e);
+//        }
+
         try {
-        this.lexiconDao.testConnection();
+            substantives = this.lexiconDao.getCount(1);
+            adjectives = this.lexiconDao.getCount(2);
+            verbs = this.lexiconDao.getCount(3);
+            adverbs = this.lexiconDao.getCount(4);
         } catch (Exception e){
             System.out.println("Virhe: " + e);
         }
@@ -77,14 +91,25 @@ public class GanbareService {
 
     public int getTotalWords(boolean substantives, boolean adjectives, boolean verbs, boolean adverbs) {
         
-        SqlParameters sqlParams = new SqlParameters(substantives, adjectives, verbs, adverbs);
-
-        try {
-            return this.lexiconDao.totalWordCount(sqlParams);
-        } catch (Exception e) {
-            System.out.println("Virhe: " + e);
-            return -1;
+        int totalWordCount = 0;
+        
+        if(substantives){
+            totalWordCount += this.substantives;
         }
+        
+        if(adjectives){
+            totalWordCount += this.adjectives;
+        }
+        
+        if(verbs){
+            totalWordCount += this.verbs;
+        }
+        
+        if(adverbs){
+            totalWordCount += this.adverbs;
+        }
+        
+        return totalWordCount;
     }
 
     public LexiconDao getLexiconDao() {

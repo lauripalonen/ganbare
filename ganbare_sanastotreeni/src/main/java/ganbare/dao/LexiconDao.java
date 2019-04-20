@@ -10,8 +10,6 @@ public class LexiconDao {
 
     public ArrayList<String[]> createLexicon(SqlParameters sqlParams) throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
-        
-        
 
         PreparedStatement stmt = connection.prepareStatement("SELECT id, finnish, kana, romaji FROM Lexicon WHERE class = ? OR class = ? OR class = ? OR class = ?");
 
@@ -46,57 +44,68 @@ public class LexiconDao {
         return this.lexicon;
     }
 
-    public int totalWordCount(SqlParameters sqlParams) throws SQLException {
+    public void testConnection() throws SQLException {
+
+        Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
+        System.out.println("Connection established to: " + connection.getCatalog());
+        System.out.println("URL: " + connection.getMetaData());
+        System.out.println("");
+
+        PreparedStatement stmt = connection.prepareStatement("SHOW TABLES");
+
+        ResultSet rs = stmt.executeQuery();
+
+        System.out.println("AVAILABLE TABLES: ");
+        while (rs.next()) {
+
+            System.out.println(rs.getString(1));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+    }
+    
+    public void addWord(String finnish, String kana, String romaji, int wordClass, int chapter) throws SQLException{
+        
+        Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
+        
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Lexicon(finnish, kana, romaji, class, chapter"
+                + "VALUES(?, ?, ?, ?, ?);");
+        
+        stmt.setString(1, finnish);
+        stmt.setString(2, kana);
+        stmt.setString(3, romaji);
+        stmt.setInt(4, wordClass);
+        stmt.setInt(5, chapter);
+        
+        stmt.executeUpdate();
+    }
+    
+    public void addSynonym(String original, String synonym) throws SQLException{
+        
+        
+    }
+
+    public int getCount(int wordClass) throws SQLException {
 
         Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
 
-        PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(*) FROM Lexicon WHERE class = ? OR class = ? OR class = ? OR class = ?;");
+        PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(*) FROM Lexicon WHERE class = ?");
 
-        stmt.setInt(1, sqlParams.getSubstantives());
-        stmt.setInt(2, sqlParams.getAdjectives());
-        stmt.setInt(3, sqlParams.getVerbs());
-        stmt.setInt(4, sqlParams.getAdverbs());
+        stmt.setInt(1, wordClass);
 
         ResultSet rs = stmt.executeQuery();
 
         int wordCount = 0;
 
-        while (rs.next()) {
-
+        if (rs.next()) {
             wordCount = rs.getInt(1);
-
         }
-
-        stmt.close();
-        rs.close();
-
-        connection.close();
 
         return wordCount;
-
     }
-    
-    public void testConnection() throws SQLException{
-        
-        Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
-        System.out.println("Connection established to: " + connection.getCatalog());
-        System.out.println("URL: " + connection.getMetaData());
-        System.out.println("");
-        
-        PreparedStatement stmt = connection.prepareStatement("SHOW TABLES");
-        
-        ResultSet rs = stmt.executeQuery();
-        
-        System.out.println("AVAILABLE TABLES: ");
-        while (rs.next()) {
-            
-            System.out.println(rs.getString(1));
-        }
-        
-        rs.close();
-        stmt.close();
-        connection.close();
-        
-    }
+   
 
 }

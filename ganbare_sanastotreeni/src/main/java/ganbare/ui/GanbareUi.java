@@ -2,7 +2,6 @@ package ganbare.ui;
 
 import ganbare.domain.GanbareService;
 
-
 import javafx.geometry.Insets;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -133,43 +132,39 @@ public class GanbareUi extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                int sessionLength = Integer.parseInt(sessionLengthField.getText());
-                int maxLength = ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected());
-
-                if ((!subsBox.isSelected() && !adjBox.isSelected() && !verbBox.isSelected() && !adverbBox.isSelected()) || sessionLength < 1 || sessionLength > maxLength) {
-                    announcementLabel.setText("Valitse vähintään yksi sanaluokka \n ja aseta validi sanamäärä");
-
+                if (sessionLengthField.getText().isEmpty()) {
+                    announcementLabel.setText("Aseta validi sanamäärä");
                 } else {
 
-                    ganbareService.newSession(fromLanguageLabel.getText(), subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected(), sessionLength);
+                    int sessionLength = Integer.parseInt(sessionLengthField.getText());
+                    int maxLength = ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected());
 
-                    subsBox.setSelected(false);
-                    adjBox.setSelected(false);
-                    verbBox.setSelected(false);
-                    adverbBox.setSelected(false);
-                    sessionLengthField.clear();
+                    if ((!subsBox.isSelected() && !adjBox.isSelected() && !verbBox.isSelected() && !adverbBox.isSelected()) || sessionLength < 1 || sessionLength > maxLength) {
+                        announcementLabel.setText("Valitse vähintään yksi sanaluokka \n ja aseta validi sanamäärä");
 
-                    primaryStage.setScene(sessionScene());
+                    } else {
+
+                        ganbareService.newSession(fromLanguageLabel.getText(), subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected(), sessionLength);
+
+                        subsBox.setSelected(false);
+                        adjBox.setSelected(false);
+                        verbBox.setSelected(false);
+                        adverbBox.setSelected(false);
+                        sessionLengthField.clear();
+                        wordsLabel.setText("max: 0 sanaa");
+
+                        primaryStage.setScene(sessionScene());
+                    }
                 }
             }
 
         });
-        
-        subsBox.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event){
-                
-                int wordCount = ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected());
-                wordsLabel.setText("(max: " + wordCount + " sanaa)");
-                
-            }
-        });
-        
-        adjBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected())+ " sanaa)"));
-        verbBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected())+ " sanaa)"));
-        adverbBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected())+ " sanaa)"));
-        
+
+        subsBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected()) + " sanaa"));
+        adjBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected()) + " sanaa)"));
+        verbBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected()) + " sanaa)"));
+        adverbBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected()) + " sanaa)"));
+
         optionsPane.getChildren().addAll(announcementPane, questionDirectionLabel, languagePane, wordClassLabel,
                 wordClassPane, sessionLengthPane, optionButtonsPane);
 
@@ -219,7 +214,7 @@ public class GanbareUi extends Application {
 
                 String feedback = ganbareService.getFeedback(answerField.getText());
                 String nextQuestion = ganbareService.nextQuestion();
-                
+
                 if (nextQuestion != null) {
 
                     feedbackLabel.setText(feedback);
@@ -234,7 +229,7 @@ public class GanbareUi extends Application {
         });
 
         toOptionsButton.setOnAction(e -> primaryStage.setScene(optionsScene));
-        
+
         quitButton.setOnAction(e -> primaryStage.setScene(reviewScene()));
 
         sessionPane.getChildren().addAll(currentPane, questionPane, answerPane, ButtonPane, feedbackPane);
