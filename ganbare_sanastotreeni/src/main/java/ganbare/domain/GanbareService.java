@@ -1,6 +1,7 @@
 package ganbare.domain;
 
 import ganbare.dao.LexiconDao;
+import ganbare.dao.UserDao;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -9,7 +10,8 @@ public class GanbareService {
 
     private Session session;
     private LexiconDao lexiconDao;
-    
+    private UserDao userDao;
+
     private int substantives;
     private int adjectives;
     private int verbs;
@@ -17,19 +19,25 @@ public class GanbareService {
 
     public GanbareService() {
         this.lexiconDao = new LexiconDao();
-        
+        this.userDao = new UserDao();
+
 //        try {
 //        this.lexiconDao.testConnection();
 //        } catch (Exception e){
 //            System.out.println("Virhe: " + e);
 //        }
-
         try {
             substantives = this.lexiconDao.getCount(1);
             adjectives = this.lexiconDao.getCount(2);
             verbs = this.lexiconDao.getCount(3);
             adverbs = this.lexiconDao.getCount(4);
-        } catch (Exception e){
+        } catch (Exception e) {
+            System.out.println("Virhe: " + e);
+        }
+        
+        try {
+            this.userDao.testConnection();
+        } catch (Exception e) {
             System.out.println("Virhe: " + e);
         }
 
@@ -90,31 +98,54 @@ public class GanbareService {
     }
 
     public int getTotalWords(boolean substantives, boolean adjectives, boolean verbs, boolean adverbs) {
-        
+
         int totalWordCount = 0;
-        
-        if(substantives){
+
+        if (substantives) {
             totalWordCount += this.substantives;
         }
-        
-        if(adjectives){
+
+        if (adjectives) {
             totalWordCount += this.adjectives;
         }
-        
-        if(verbs){
+
+        if (verbs) {
             totalWordCount += this.verbs;
         }
-        
-        if(adverbs){
+
+        if (adverbs) {
             totalWordCount += this.adverbs;
         }
-        
+
         return totalWordCount;
     }
 
     public LexiconDao getLexiconDao() {
         return this.lexiconDao;
     }
-    
+
+    public boolean newUser(String name, String password) {
+
+        try {
+            this.userDao.newUser(name, password);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Virhe: " + e);
+            return false;
+
+        }
+    }
+
+    public boolean loginUser(String name, String password) {
+
+        try {
+            this.userDao.loginUser(name, password);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Virhe: " + e);
+            return false;
+        }
+
+    }
 
 }

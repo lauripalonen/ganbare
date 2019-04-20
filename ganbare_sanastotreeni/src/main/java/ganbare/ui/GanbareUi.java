@@ -67,12 +67,52 @@ public class GanbareUi extends Application {
 
         loginPane.getChildren().addAll(credentialsPane, buttonPane);
 
-        loginButton.setOnAction(e -> primaryStage.setScene(optionsScene));
-        registerButton.setOnAction(e -> primaryStage.setScene(optionsScene));
+        loginButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                String name = userField.getText();
+                String password = passwordField.getText();
+
+                if (ganbareService.loginUser(name, password)) {
+                    passwordField.clear();
+                    primaryStage.setScene(optionsScene(name));
+                } else {
+                    System.out.println("incorrect login credentials...");
+                }
+
+            }
+        });
+        
+        
+        registerButton.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                String name = userField.getText();
+                String password = passwordField.getText();
+                
+                if(ganbareService.newUser(name, password)) {
+                    
+                    passwordField.clear();
+                    primaryStage.setScene(optionsScene(name));
+                } else {
+                    System.out.println("unable to register");
+                }
+                
+                
+            }
+        });
 
         loginScene = new Scene(loginPane, 400, 300);
 
-        //Options scene
+        primaryStage.setTitle("ガンバレ！！！");
+        primaryStage.setScene(loginScene);
+        primaryStage.show();
+
+    }
+
+    public Scene optionsScene(String username) {
         VBox optionsPane = new VBox(10);
         HBox announcementPane = new HBox(10);
         HBox languagePane = new HBox(10);
@@ -82,7 +122,7 @@ public class GanbareUi extends Application {
 
         optionsPane.setPadding(new Insets(10));
 
-        Label announcementLabel = new Label("Welcome user!");
+        Label announcementLabel = new Label("Welcome " + username + "!");
         announcementLabel.setAlignment(Pos.CENTER);
         announcementPane.getChildren().add(announcementLabel);
         announcementPane.setAlignment(Pos.CENTER);
@@ -152,6 +192,7 @@ public class GanbareUi extends Application {
                         adverbBox.setSelected(false);
                         sessionLengthField.clear();
                         wordsLabel.setText("max: 0 sanaa");
+                        announcementLabel.setText("");
 
                         primaryStage.setScene(sessionScene());
                     }
@@ -170,9 +211,8 @@ public class GanbareUi extends Application {
 
         optionsScene = new Scene(optionsPane, 400, 300);
 
-        primaryStage.setTitle("ガンバレ！！！");
-        primaryStage.setScene(loginScene);
-        primaryStage.show();
+        return optionsScene;
+
     }
 
     public Scene sessionScene() {
