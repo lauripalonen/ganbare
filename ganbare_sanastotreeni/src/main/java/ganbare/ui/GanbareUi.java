@@ -2,6 +2,7 @@ package ganbare.ui;
 
 import ganbare.domain.GanbareService;
 
+
 import javafx.geometry.Insets;
 import javafx.application.Application;
 import javafx.application.Platform;
