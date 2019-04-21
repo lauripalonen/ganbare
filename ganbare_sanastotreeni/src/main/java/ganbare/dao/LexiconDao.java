@@ -67,11 +67,11 @@ public class LexiconDao {
 
     }
 
-    public void addWord(String finnish, String kana, String romaji, int wordClass, int chapter) throws SQLException {
+    public boolean addWord(String finnish, String kana, String romaji, int wordClass, int chapter) throws SQLException {
 
         Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
 
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Lexicon(finnish, kana, romaji, class, chapter"
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Lexicon(finnish, kana, romaji, class, chapter) "
                 + "VALUES(?, ?, ?, ?, ?);");
 
         stmt.setString(1, finnish);
@@ -80,73 +80,78 @@ public class LexiconDao {
         stmt.setInt(4, wordClass);
         stmt.setInt(5, chapter);
 
-        stmt.executeUpdate();
-        
+        int changedRows = stmt.executeUpdate();
+
+        if (changedRows == 1) {
+            stmt.close();
+            connection.close();
+            return true;
+        }
+
         stmt.close();
         connection.close();
+        return false;
     }
-    
-    public boolean addFinnishSynonym(String original, String synonym) throws SQLException{
-        
+
+    public boolean addFinnishSynonym(String original, String synonym) throws SQLException {
+
         Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
-        
+
         PreparedStatement stmt = connection.prepareStatement("SELECT id FROM Lexicon WHERE finnish = ?;");
-        
+
         stmt.setString(1, original);
-        
+
         ResultSet rs = stmt.executeQuery();
-        
-        if(rs.next()){
-            
+
+        if (rs.next()) {
+
             int lexicon_id = rs.getInt(1);
-            
+
             System.out.println("sana löydetty, id: " + lexicon_id);
-            
+
             stmt = connection.prepareStatement("INSERT INTO SynonymFi(finnish)VALUES(?);");
-            
+
             stmt.setString(1, synonym);
-            
+
             stmt.executeUpdate();
-            
+
             stmt = connection.prepareStatement("SELECT id FROM SynonymFi WHERE finnish = ?");
-            
+
             stmt.setString(1, synonym);
-            
+
             rs = stmt.executeQuery();
 
-            if(rs.next()){
-            
+            if (rs.next()) {
+
                 int synonymfi_id = rs.getInt(1);
-                
+
                 System.out.println("Synonyymi lisätty, id: " + synonymfi_id);
-                
+
                 stmt = connection.prepareStatement("INSERT INTO LexiconSynonymFI(lexicon_id, synonymfi_id)VALUES(?, ?);");
-                
+
                 stmt.setInt(1, lexicon_id);
                 stmt.setInt(2, synonymfi_id);
-                
+
                 int update = stmt.executeUpdate();
-                
-                if (update == 1){
+
+                if (update == 1) {
                     System.out.println("Synonyymi yhdistetty originaaliin onnistuneesti!");
-                    
+
                     rs.close();
                     stmt.close();
                     connection.close();
-                    
-                    return true; 
+
+                    return true;
                 }
 
-                
             }
-       
+
         }
-        
+
         rs.close();
         stmt.close();
         connection.close();
-        
-        
+
         return false;
     }
 
@@ -168,7 +173,7 @@ public class LexiconDao {
         while (rs.next()) {
             words.add(rs.getString(1));
         }
-        
+
         rs.close();
         stmt.close();
         connection.close();
@@ -192,7 +197,7 @@ public class LexiconDao {
         if (rs.next()) {
             wordCount = rs.getInt(1);
         }
-        
+
         rs.close();
         stmt.close();
         connection.close();

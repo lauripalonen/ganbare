@@ -138,7 +138,7 @@ public class GanbareService {
     }
 
     public boolean addFinnishSynonym(String original, String synonym) {
-        
+
         try {
             return lexiconDao.addFinnishSynonym(original, synonym);
         } catch (Exception e) {
@@ -146,6 +146,29 @@ public class GanbareService {
         }
 
         return false;
+    }
+
+    public boolean addNewWord(String finnish, String kana, String romaji, String wordClass, int chapter) {
+        int wordClassInt = 0;
+
+        if (wordClass.equals("substantiivi")) {
+            wordClassInt = 1;
+        } else if (wordClass.equals("adjektiivi")) {
+            wordClassInt = 2;
+        } else if (wordClass.equals("verbi")) {
+            wordClassInt = 3;
+        } else if (wordClass.equals("adverbi")) {
+            wordClassInt = 4;
+        }
+
+        try {
+            System.out.println("Lisätään: " + finnish + ", " + kana + ", " + romaji + ", " + wordClassInt + ", " + chapter);
+            return lexiconDao.addWord(finnish, kana, romaji, wordClassInt, chapter);
+        } catch (Exception e) {
+            System.out.println("Virhe: " + e);
+            return false;
+        }
+
     }
 
 }

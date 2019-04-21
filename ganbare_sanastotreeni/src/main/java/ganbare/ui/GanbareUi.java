@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -55,6 +56,7 @@ public class GanbareUi extends Application {
 
         Button loginButton = new Button("Kirjaudu");
         Button registerButton = new Button("Rekisteröidy");
+        loginButton.setDefaultButton(true);
 
         credentialsPane.add(userLabel, 0, 0);
         credentialsPane.add(userField, 1, 0);
@@ -128,7 +130,7 @@ public class GanbareUi extends Application {
 
         optionsPane.setPadding(new Insets(10));
 
-        Label announcementLabel = new Label("Welcome " + username + "!");
+        Label announcementLabel = new Label("ようこそ " + username + "-　さん!");
         announcementLabel.setAlignment(Pos.CENTER);
         announcementPane.getChildren().add(announcementLabel);
         announcementPane.setAlignment(Pos.CENTER);
@@ -313,55 +315,145 @@ public class GanbareUi extends Application {
     }
 
     public Scene adminScene() {
-        VBox adminPane = new VBox();
+        HBox buttonPane = new HBox(10);
+
+        Button addWordButton = new Button("Lisää sana");
+        Button addSynonymButton = new Button("Lisää synonyymi");
+        Button logoutButton = new Button("Kirjaudu ulos");
+
+        addWordButton.setOnAction(e -> primaryStage.setScene(addWordScene()));
+        addSynonymButton.setOnAction(e -> primaryStage.setScene(addSynonymScene()));
+        logoutButton.setOnAction(e -> primaryStage.setScene(loginScene));
+
+        buttonPane.getChildren().addAll(addWordButton, addSynonymButton, logoutButton);
+        buttonPane.setAlignment(Pos.CENTER);
+
+        Scene adminScene = new Scene(buttonPane, 400, 300);
+
+        return adminScene;
+
+    }
+
+    public Scene addWordScene() {
+        VBox addWordPane = new VBox(10);
         GridPane optionsPane = new GridPane();
-        HBox buttonsPane = new HBox(10);
-        
-        adminPane.setPadding(new Insets(50, 10, 10, 10));
-        buttonsPane.setPadding(new Insets(30, 10, 10, 10));
+        HBox buttonPane = new HBox(10);
 
+        Label finnishLabel = new Label("Suomeksi");
+        Label kanaLabel = new Label("Kana");
+        Label romajiLabel = new Label("Romaji");
+        Label wordClassLabel = new Label("Sanaluokka");
+        Label chapterLabel = new Label("Kappale");
+        Label announcementLabel = new Label("");
+        TextField finnishField = new TextField();
+        TextField kanaField = new TextField();
+        TextField romajiField = new TextField();
+        ComboBox classBox = new ComboBox();
+        ComboBox chapterBox = new ComboBox();
+        classBox.getItems().addAll("substantiivi", "adjektiivi", "verbi", "adverbi");
+        chapterBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
-        Label lisaaLabel = new Label("Lisää uusi synonyymi");
+        classBox.getSelectionModel().selectFirst();
+        chapterBox.getSelectionModel().selectFirst();
+
+        Button addWordButton = new Button("Lisää sana");
+        Button goBackButton = new Button("Takaisin");
+
+        buttonPane.getChildren().addAll(addWordButton, goBackButton);
+
+        optionsPane.add(finnishLabel, 0, 0);
+        optionsPane.add(finnishField, 0, 1);
+        optionsPane.add(kanaLabel, 1, 0);
+        optionsPane.add(kanaField, 1, 1);
+        optionsPane.add(romajiLabel, 2, 0);
+        optionsPane.add(romajiField, 2, 1);
+        optionsPane.add(wordClassLabel, 0, 3);
+        optionsPane.add(classBox, 0, 4);
+        optionsPane.add(chapterLabel, 1, 3);
+        optionsPane.add(chapterBox, 1, 4);
+        optionsPane.setHgap(10);
+        optionsPane.setVgap(5);
+        optionsPane.setPadding(new Insets(10, 20, 20, 20));
+
+        goBackButton.setOnAction(e -> primaryStage.setScene(adminScene()));
+
+        addWordButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                String finnish = finnishField.getText();
+                String kana = kanaField.getText();
+                String romaji = romajiField.getText();
+                String wordClass = classBox.getSelectionModel().getSelectedItem().toString();
+                int chapter = Integer.parseInt(chapterBox.getSelectionModel().getSelectedItem().toString());
+
+                if (ganbareService.addNewWord(finnish, kana, romaji, wordClass, chapter));
+                {
+                    announcementLabel.setText("Uusi sana lisätty!");
+                }
+            }
+
+        });
+
+        buttonPane.setAlignment(Pos.CENTER);
+        addWordPane.getChildren().addAll(optionsPane, buttonPane, announcementLabel);
+
+        addWordPane.setAlignment(Pos.CENTER);
+
+        Scene wordScene = new Scene(addWordPane, 400, 300);
+
+        return wordScene;
+
+    }
+
+    public Scene addSynonymScene() {
+        VBox addSynonymPane = new VBox(10);
+        GridPane optionsPane = new GridPane();
+        HBox buttonPane = new HBox(10);
+
         Label originalLabel = new Label("Alkuperäinen sana");
         Label synonymLabel = new Label("Lisättävä synonyymi");
+        Label announcementLabel = new Label("");
 
         TextField originalField = new TextField();
         TextField synonymField = new TextField();
 
-        Button addButton = new Button("Lisää synonyymi");
-        Button logoutButton = new Button("Kirjaudu ulos");
+        Button addSynonymButton = new Button("Lisää synonyymi");
+        Button goBackButton = new Button("Takaisin");
 
-        optionsPane.add(lisaaLabel, 0, 0);
         optionsPane.add(originalLabel, 0, 1);
         optionsPane.add(synonymLabel, 1, 1);
         optionsPane.add(originalField, 0, 2);
         optionsPane.add(synonymField, 1, 2);
-        
         optionsPane.setHgap(10);
-        optionsPane.setVgap(10);
+        optionsPane.setVgap(5);
+        optionsPane.setPadding(new Insets(10, 20, 20, 20));
 
-        buttonsPane.getChildren().addAll(addButton, logoutButton);
-        buttonsPane.setAlignment(Pos.CENTER);
-        
         optionsPane.setAlignment(Pos.CENTER);
 
-        adminPane.getChildren().addAll(optionsPane, buttonsPane);
-        
-        logoutButton.setOnAction(e -> primaryStage.setScene(loginScene));
-        
-        addButton.setOnAction(new EventHandler<ActionEvent>() {
-          
-           @Override
-           public void handle(ActionEvent event){
-               ganbareService.addFinnishSynonym(originalField.getText(), synonymField.getText());
-           }
-            
+        buttonPane.getChildren().addAll(addSynonymButton, goBackButton);
+
+        buttonPane.setAlignment(Pos.CENTER);
+
+        goBackButton.setOnAction(e -> primaryStage.setScene(adminScene()));
+
+        addSynonymButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (ganbareService.addFinnishSynonym(originalField.getText(), synonymField.getText())) {
+                    announcementLabel.setText("Synonyymi lisätty!");
+                }
+            }
+
         });
 
-        Scene adminScene = new Scene(adminPane, 400, 300);
+        addSynonymPane.getChildren().addAll(optionsPane, buttonPane, announcementLabel);
+        addSynonymPane.setAlignment(Pos.CENTER);
 
-        return adminScene;
+        Scene synonymScene = new Scene(addSynonymPane, 400, 300);
 
+        return synonymScene;
     }
 
     public static void main(String[] args) {
