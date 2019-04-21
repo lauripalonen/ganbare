@@ -23,7 +23,7 @@ public class UserDao {
 
     }
 
-    public String loginUser(String name, String password) throws SQLException {
+    public boolean loginUser(String name, String password) throws SQLException {
 
         Connection connection = DriverManager.getConnection("jdbc:h2:./user", "sa", "");
 
@@ -32,21 +32,17 @@ public class UserDao {
         stmt.setString(1, name);
         stmt.setString(2, password);
 
-        System.out.println("Trying with credentials: " + name + ", " + password);
-
         ResultSet rs = stmt.executeQuery();
 
-        String username = null;
-
         if (rs.next()) {
-            username = rs.getString(1);
-        } 
+            return true;
+        }
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return username;
+        return false;
 
     }
 
