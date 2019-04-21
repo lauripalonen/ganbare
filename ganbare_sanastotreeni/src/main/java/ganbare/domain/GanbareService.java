@@ -21,22 +21,11 @@ public class GanbareService {
         this.lexiconDao = new LexiconDao();
         this.userDao = new UserDao();
 
-//        try {
-//        this.lexiconDao.testConnection();
-//        } catch (Exception e){
-//            System.out.println("Virhe: " + e);
-//        }
         try {
             substantives = this.lexiconDao.getCount(1);
             adjectives = this.lexiconDao.getCount(2);
             verbs = this.lexiconDao.getCount(3);
             adverbs = this.lexiconDao.getCount(4);
-        } catch (Exception e) {
-            System.out.println("Virhe: " + e);
-        }
-        
-        try {
-            this.userDao.testConnection();
         } catch (Exception e) {
             System.out.println("Virhe: " + e);
         }
@@ -57,9 +46,10 @@ public class GanbareService {
             lexicon = this.lexiconDao.createLexicon(sqlParams);
         } catch (SQLException e) {
             System.out.println("Virhe: " + e);
+            return false;
         }
 
-        this.session = new Session(language, lexicon, length);
+        this.session = new Session(language, lexicon, length, this.lexiconDao);
 
         return true;
 
@@ -139,13 +129,23 @@ public class GanbareService {
     public boolean loginUser(String name, String password) {
 
         try {
-            this.userDao.loginUser(name, password);
-            return true;
+            return this.userDao.loginUser(name, password);
         } catch (Exception e) {
             System.out.println("Virhe: " + e);
             return false;
         }
 
+    }
+
+    public boolean addFinnishSynonym(String original, String synonym) {
+        
+        try {
+            return lexiconDao.addFinnishSynonym(original, synonym);
+        } catch (Exception e) {
+            System.out.println("Virhe: " + e);
+        }
+
+        return false;
     }
 
 }

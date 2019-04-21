@@ -1,4 +1,5 @@
 package ganbare.domain;
+import ganbare.dao.LexiconDao;
 
 import java.util.*;
 
@@ -15,8 +16,10 @@ public class Session {
 
     private String currentQ = "";
     private String currentA = "";
+    
+    private LexiconDao lexiconDao;
 
-    public Session(String language, ArrayList<String[]> lexicon, int sessionLength) {
+    public Session(String language, ArrayList<String[]> lexicon, int sessionLength, LexiconDao lexiconDao) {
         questions = new ArrayDeque<>();
         answers = new ArrayDeque<>();
 
@@ -35,6 +38,8 @@ public class Session {
                 answers.add(word[0]);
             }
         }
+        
+        this.lexiconDao = lexiconDao;
 
     }
 
@@ -89,6 +94,19 @@ public class Session {
         String answer = this.currentA.toLowerCase().trim();
 
         if (input.equals(answer)) {
+            correctAnswers++;
+            return "Oikea vastaus!";
+        }
+        
+        boolean synonymFound = false;
+        
+        try {
+            synonymFound = lexiconDao.getFinnishSynonyms(answer).contains(userInput);
+        } catch (Exception e) {
+            System.out.println("Virhe: " + e);
+        }
+        
+        if (synonymFound){
             correctAnswers++;
             return "Oikea vastaus!";
         }

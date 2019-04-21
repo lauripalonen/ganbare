@@ -38,16 +38,17 @@ public class GanbareUi extends Application {
 
         this.primaryStage = primaryStage;
 
-        //Login scene
         VBox loginPane = new VBox(10);
         HBox buttonPane = new HBox(20);
         GridPane credentialsPane = new GridPane();
+        BorderPane announcementPane = new BorderPane();
 
         loginPane.setPadding(new Insets(50, 10, 10, 10));
         buttonPane.setPadding(new Insets(30, 10, 10, 10));
 
         Label userLabel = new Label("Käyttäjätunnus");
         Label passwordLabel = new Label("Salasana");
+        Label announcementLabel = new Label("");
 
         TextField userField = new TextField();
         PasswordField passwordField = new PasswordField();
@@ -65,7 +66,9 @@ public class GanbareUi extends Application {
         buttonPane.getChildren().addAll(loginButton, registerButton);
         buttonPane.setAlignment(Pos.CENTER);
 
-        loginPane.getChildren().addAll(credentialsPane, buttonPane);
+        announcementPane.setCenter(announcementLabel);
+
+        loginPane.getChildren().addAll(credentialsPane, buttonPane, announcementPane);
 
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -76,31 +79,34 @@ public class GanbareUi extends Application {
 
                 if (ganbareService.loginUser(name, password)) {
                     passwordField.clear();
-                    primaryStage.setScene(optionsScene(name));
+
+                    if (name.equals("admin")) {
+                        primaryStage.setScene(adminScene());
+                    } else {
+                        primaryStage.setScene(optionsScene(name));
+                    }
                 } else {
-                    System.out.println("incorrect login credentials...");
+                    announcementLabel.setText("Virheellinen käyttäjätunnus tai salasana.");
                 }
 
             }
         });
-        
-        
+
         registerButton.setOnAction(new EventHandler<ActionEvent>() {
-            
+
             @Override
             public void handle(ActionEvent event) {
                 String name = userField.getText();
                 String password = passwordField.getText();
-                
-                if(ganbareService.newUser(name, password)) {
-                    
+
+                if (ganbareService.newUser(name, password)) {
+
                     passwordField.clear();
                     primaryStage.setScene(optionsScene(name));
                 } else {
-                    System.out.println("unable to register");
+                    announcementLabel.setText("Käyttäjätunnus \"" + userField.getText() + "\" on jo olemassa");
                 }
-                
-                
+
             }
         });
 
@@ -263,14 +269,14 @@ public class GanbareUi extends Application {
                     questionLabel.setText(nextQuestion);
 
                 } else {
-                    primaryStage.setScene(reviewScene());
+                    primaryStage.setScene(reviewScene(feedback));
                 }
             }
         });
 
         toOptionsButton.setOnAction(e -> primaryStage.setScene(optionsScene));
 
-        quitButton.setOnAction(e -> primaryStage.setScene(reviewScene()));
+        quitButton.setOnAction(e -> primaryStage.setScene(reviewScene("")));
 
         sessionPane.getChildren().addAll(currentPane, questionPane, answerPane, ButtonPane, feedbackPane);
 
@@ -279,11 +285,13 @@ public class GanbareUi extends Application {
         return sessionScene;
     }
 
-    public Scene reviewScene() {
+    public Scene reviewScene(String feedback) {
         VBox reviewPane = new VBox(10);
+        HBox feedbackPane = new HBox(10);
         BorderPane textPane = new BorderPane();
         HBox buttonPane = new HBox(10);
 
+        Label feedbackLabel = new Label(feedback);
         Label reviewLabel = new Label(ganbareService.getSessionReview());
         Button exitButton = new Button("Sulje");
         Button toOptionsButton = new Button("Alkuvalikkoon");
@@ -291,15 +299,69 @@ public class GanbareUi extends Application {
         exitButton.setOnAction(e -> Platform.exit());
         toOptionsButton.setOnAction(e -> primaryStage.setScene(optionsScene));
 
+        feedbackPane.getChildren().addAll(feedbackLabel);
+        feedbackPane.setAlignment(Pos.CENTER);
         textPane.setCenter(reviewLabel);
         buttonPane.getChildren().addAll(toOptionsButton, exitButton);
         buttonPane.setAlignment(Pos.CENTER);
 
-        reviewPane.getChildren().addAll(textPane, buttonPane);
+        reviewPane.getChildren().addAll(feedbackPane, textPane, buttonPane);
 
         Scene testiscene = new Scene(reviewPane, 400, 300);
 
         return testiscene;
+    }
+
+    public Scene adminScene() {
+        VBox adminPane = new VBox();
+        GridPane optionsPane = new GridPane();
+        HBox buttonsPane = new HBox(10);
+        
+        adminPane.setPadding(new Insets(50, 10, 10, 10));
+        buttonsPane.setPadding(new Insets(30, 10, 10, 10));
+
+
+        Label lisaaLabel = new Label("Lisää uusi synonyymi");
+        Label originalLabel = new Label("Alkuperäinen sana");
+        Label synonymLabel = new Label("Lisättävä synonyymi");
+
+        TextField originalField = new TextField();
+        TextField synonymField = new TextField();
+
+        Button addButton = new Button("Lisää synonyymi");
+        Button logoutButton = new Button("Kirjaudu ulos");
+
+        optionsPane.add(lisaaLabel, 0, 0);
+        optionsPane.add(originalLabel, 0, 1);
+        optionsPane.add(synonymLabel, 1, 1);
+        optionsPane.add(originalField, 0, 2);
+        optionsPane.add(synonymField, 1, 2);
+        
+        optionsPane.setHgap(10);
+        optionsPane.setVgap(10);
+
+        buttonsPane.getChildren().addAll(addButton, logoutButton);
+        buttonsPane.setAlignment(Pos.CENTER);
+        
+        optionsPane.setAlignment(Pos.CENTER);
+
+        adminPane.getChildren().addAll(optionsPane, buttonsPane);
+        
+        logoutButton.setOnAction(e -> primaryStage.setScene(loginScene));
+        
+        addButton.setOnAction(new EventHandler<ActionEvent>() {
+          
+           @Override
+           public void handle(ActionEvent event){
+               ganbareService.addFinnishSynonym(originalField.getText(), synonymField.getText());
+           }
+            
+        });
+
+        Scene adminScene = new Scene(adminPane, 400, 300);
+
+        return adminScene;
+
     }
 
     public static void main(String[] args) {
