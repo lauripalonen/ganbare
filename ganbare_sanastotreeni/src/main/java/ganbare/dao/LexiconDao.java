@@ -66,26 +66,115 @@ public class LexiconDao {
         connection.close();
 
     }
-    
-    public void addWord(String finnish, String kana, String romaji, int wordClass, int chapter) throws SQLException{
-        
+
+    public void addWord(String finnish, String kana, String romaji, int wordClass, int chapter) throws SQLException {
+
         Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
-        
+
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Lexicon(finnish, kana, romaji, class, chapter"
                 + "VALUES(?, ?, ?, ?, ?);");
-        
+
         stmt.setString(1, finnish);
         stmt.setString(2, kana);
         stmt.setString(3, romaji);
         stmt.setInt(4, wordClass);
         stmt.setInt(5, chapter);
-        
+
         stmt.executeUpdate();
+        
+        stmt.close();
+        connection.close();
     }
     
-    public void addSynonym(String original, String synonym) throws SQLException{
+    public boolean addFinnishSynonym(String original, String synonym) throws SQLException{
+        
+        Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
+        
+        PreparedStatement stmt = connection.prepareStatement("SELECT id FROM Lexicon WHERE finnish = ?;");
+        
+        stmt.setString(1, original);
+        
+        ResultSet rs = stmt.executeQuery();
+        
+        if(rs.next()){
+            
+            int lexicon_id = rs.getInt(1);
+            
+            System.out.println("sana löydetty, id: " + lexicon_id);
+            
+            stmt = connection.prepareStatement("INSERT INTO SynonymFi(finnish)VALUES(?);");
+            
+            stmt.setString(1, synonym);
+            
+            stmt.executeUpdate();
+            
+            stmt = connection.prepareStatement("SELECT id FROM SynonymFi WHERE finnish = ?");
+            
+            stmt.setString(1, synonym);
+            
+            rs = stmt.executeQuery();
+
+            if(rs.next()){
+            
+                int synonymfi_id = rs.getInt(1);
+                
+                System.out.println("Synonyymi lisätty, id: " + synonymfi_id);
+                
+                stmt = connection.prepareStatement("INSERT INTO LexiconSynonymFI(lexicon_id, synonymfi_id)VALUES(?, ?);");
+                
+                stmt.setInt(1, lexicon_id);
+                stmt.setInt(2, synonymfi_id);
+                
+                int update = stmt.executeUpdate();
+                
+                if (update == 1){
+                    System.out.println("Synonyymi yhdistetty originaaliin onnistuneesti!");
+                    
+                    rs.close();
+                    stmt.close();
+                    connection.close();
+                    
+                    return true; 
+                }
+
+                
+            }
+       
+        }
+        
+        rs.close();
+        stmt.close();
+        connection.close();
         
         
+        return false;
+    }
+
+    public ArrayList<String> getFinnishSynonyms(String word) throws SQLException {
+
+        Connection connection = DriverManager.getConnection("jdbc:h2:./lexicon", "sa", "");
+
+        PreparedStatement stmt = connection.prepareStatement("SELECT SynonymFi.finnish FROM SynonymFi "
+                + "JOIN LexiconSynonymFi ON LexiconSynonymFi.synonymfi_id = SynonymFi.id "
+                + "JOIN Lexicon ON LexiconSynonymFi.lexicon_id = Lexicon.id "
+                + "WHERE lexicon.finnish = ?");
+
+        stmt.setString(1, word);
+
+        ResultSet rs = stmt.executeQuery();
+
+        ArrayList<String> words = new ArrayList<>();
+
+        while (rs.next()) {
+            words.add(rs.getString(1));
+        }
+        
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return words;
+
     }
 
     public int getCount(int wordClass) throws SQLException {
@@ -103,9 +192,12 @@ public class LexiconDao {
         if (rs.next()) {
             wordCount = rs.getInt(1);
         }
+        
+        rs.close();
+        stmt.close();
+        connection.close();
 
         return wordCount;
     }
-   
 
 }
