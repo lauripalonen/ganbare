@@ -1,80 +1,51 @@
 package domain;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ganbare.domain.Session;
+import ganbare.domain.Word;
 import java.util.ArrayList;
 
-/**
- *
- * @author palolaur
- */
 public class SessionTest {
 
     Session session;
-    ArrayList<String[]> originalLexicon;
-    ArrayList<String[]> sessionLexicon;
+    ArrayList<Word> originalLexicon;
+    ArrayList<Word> sessionLexicon;
 
     @Before
     public void setUp() {
         this.originalLexicon = new ArrayList<>();
         this.sessionLexicon = new ArrayList<>();
 
-        String[] word01 = {"testi", "テスト", "tesuto"};
+        Word word01 = new Word("testi", "テスト", "tesuto", 1, 0);
+        Word word02 = new Word("suomi", "フインランド", "finrando", 1, 0);
+        Word word03 = new Word("japanin kieli", "にほんご", "nihongo", 1, 0);
+        Word word04 = new Word("opiskella", "べんきょうする", "benkyousuru", 3, 0);
+        Word word05 = new Word("yrittää parhaansa", "がんばる", "ganbaru", 3, 0);
+        Word word06 = new Word("söpö", "かわいい", "kawaii", 2, 0);
+        Word word07 = new Word("kissa", "ねこ", "neko", 1, 0);
+        Word word08 = new Word("tunnin ajan", "じかん", "jikan", 4, 0);
+        Word word09 = new Word("mitä?", "なに", "nani", 5, 0);
+        Word word10 = new Word("jes", "やった", "yatta", 1, 0);
+
         originalLexicon.add(word01);
-        String[] word02 = {"suomi", "フインランド", "finrando"};
         originalLexicon.add(word02);
-        String[] word03 = {"japanin kieli", "にほんご", "nihongo"};
         originalLexicon.add(word03);
-        String[] word04 = {"opiskella", "べんきょうする", "benkyousuru"};
         originalLexicon.add(word04);
-        String[] word05 = {"yrittää parhaansa", "がんばる", "ganbaru"};
         originalLexicon.add(word05);
-        String[] word06 = {"söpö", "かわいい", "kawaii"};
         originalLexicon.add(word06);
-        String[] word07 = {"kissa", "ねこ", "neko"};
         originalLexicon.add(word07);
-        String[] word08 = {"tunnin ajan", "じかん", "jikan"};
         originalLexicon.add(word08);
-        String[] word09 = {"mitä?", "なに", "nani"};
         originalLexicon.add(word09);
-        String[] word10 = {"jes", "やった", "yatta"};
         originalLexicon.add(word10);
 
-        for (String[] word : this.originalLexicon) {
+        for (Word word : this.originalLexicon) {
             sessionLexicon.add(word);
         }
 
         this.session = new Session("suomi", this.sessionLexicon, 5);
 
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    @Test
-    public void constructorFillsQuestionStack() {
-        boolean filled = !this.session.getQuestionStack().isEmpty();
-
-        assertTrue(filled);
-
-    }
-
-    @Test
-    public void constructorFillsAnswerStack() {
-        boolean filled = !this.session.getAnswerStack().isEmpty();
-
-        assertTrue(filled);
     }
 
     @Test
@@ -85,27 +56,10 @@ public class SessionTest {
     }
 
     @Test
-    public void constructorCreatesQuestionStackOfCorrectLength() {
-        int length = this.session.getQuestionStack().size();
+    public void newQuestionUpdatesCurrentQuestion() {
+        String q01 = this.session.newQuestion();
 
-        assertEquals(5, length);
-
-    }
-
-    @Test
-    public void constructorCreatesAnswerStackOfCorrectLength() {
-        int length = this.session.getAnswerStack().size();
-
-        assertEquals(5, length);
-    }
-
-    @Test
-    public void getQuestionUpdatesCurrentQuestion() {
-        String q01 = this.session.getCurrentQuestion();
-
-        this.session.getQuestion();
-
-        String q02 = this.session.getCurrentQuestion();
+        String q02 = this.session.newQuestion();
 
         boolean differentQ = !q01.equals(q02);
 
@@ -113,10 +67,12 @@ public class SessionTest {
     }
 
     @Test
-    public void getQuestionUpdatesCurrentAnswer() {
+    public void newQuestionUpdatesCurrentAnswer() {
+        this.session.newQuestion();
+
         String a01 = this.session.getCurrentAnswer();
 
-        this.session.getQuestion();
+        this.session.newQuestion();
 
         String a02 = this.session.getCurrentAnswer();
 
@@ -126,8 +82,8 @@ public class SessionTest {
     }
 
     @Test
-    public void getQuestionReturnsCurrentQuestion() {
-        String q01 = this.session.getQuestion();
+    public void newQuestionReturnsCurrentQuestion() {
+        String q01 = this.session.newQuestion();
         String q02 = this.session.getCurrentQuestion();
 
         boolean same = q01.equals(q02);
@@ -141,10 +97,10 @@ public class SessionTest {
         boolean same = true;
 
         for (int i = 0; i < 5; i++) {
-            String original = this.originalLexicon.get(i)[0];
-            String session = this.session.getQuestion();
+            String originalWord = this.originalLexicon.get(i).getFinnish();
+            String sessionWord = this.session.newQuestion();
 
-            if (!original.equals(session)) {
+            if (!originalWord.equals(sessionWord)) {
                 same = false;
             }
 
@@ -152,22 +108,6 @@ public class SessionTest {
 
         assertFalse(same);
 
-    }
-
-    @Test
-    public void AnswerAndQuestionStacksCorrelatesWithOriginalLexicon() {
-        String question = this.session.getQuestion();
-        String answer = this.session.getCurrentAnswer();
-
-        boolean sameAnswer = false;
-
-        for (String[] word : this.originalLexicon) {
-            if (word[0].equals(question)) {
-                sameAnswer = word[02].equals(answer);
-            }
-        }
-
-        assertTrue(sameAnswer);
     }
 
     @Test
@@ -190,7 +130,7 @@ public class SessionTest {
     @Test
     public void getFeedbackWithCorrectInputIncreasesCorrectAnswers() {
 
-        this.session.getQuestion();
+        this.session.newQuestion();
 
         String answer = this.session.getCurrentAnswer();
 
@@ -203,7 +143,7 @@ public class SessionTest {
 
     @Test
     public void getFeedbackWithIncorrectAnswerMakesNoChangeToCorrectAnswers() {
-        this.session.getQuestion();
+        this.session.newQuestion();
 
         String answer = "Incorrect Answer";
 
@@ -216,7 +156,7 @@ public class SessionTest {
 
     @Test
     public void getFeedbackForIncorrectAnswerReturnsCorrectFeedback() {
-        this.session.getQuestion();
+        this.session.newQuestion();
 
         String answer = "Incorrect Answer";
         String correct = this.session.getCurrentAnswer();
@@ -229,7 +169,7 @@ public class SessionTest {
 
     @Test
     public void getFeedbackForCorrectAnswerReturnsCorrectFeedback() {
-        this.session.getQuestion();
+        this.session.newQuestion();
 
         String answer = this.session.getCurrentAnswer();
 
@@ -242,7 +182,7 @@ public class SessionTest {
     public void getReviewReturnsCorrectReviewForAllCorrectAnswers() {
 
         for (int i = 0; i < 5; i++) {
-            this.session.getQuestion();
+            this.session.newQuestion();
 
             this.session.getFeedback(this.session.getCurrentAnswer());
 
@@ -257,7 +197,7 @@ public class SessionTest {
     public void getReviewReturnsCorrectReviewForAllIncorrectAnswers() {
 
         for (int i = 0; i < 5; i++) {
-            this.session.getQuestion();
+            this.session.newQuestion();
 
             this.session.getFeedback("Incorrect Answer");
 
@@ -272,7 +212,7 @@ public class SessionTest {
     public void getReviewReturnsCorrectReviewForSomeCorrectAnswers() {
 
         for (int i = 0; i < 5; i++) {
-            this.session.getQuestion();
+            this.session.newQuestion();
 
             if (i % 2 == 0) {
                 this.session.getFeedback(this.session.getCurrentAnswer());
@@ -283,45 +223,16 @@ public class SessionTest {
         }
 
         String review = this.session.getReview();
-        
+
         assertEquals("Oikeita vastauksia: 3\nKysymyksiä yhteensä: 5", review);
 
     }
-    
+
     @Test
-    public void getCurrentQuestionNumReturnsZeroWhenNoQuestionsAsked(){
+    public void getCurrentQuestionNumReturnsZeroWhenNoQuestionsAsked() {
         int num = this.session.getCurrentQuestionNum();
-        
+
         assertEquals(0, num);
     }
-    
-    @Test
-    public void incrementCounterIncreasesQuestionNumByOne(){
-        this.session.incrementCounter();
-        
-        int num = this.session.getCurrentQuestionNum();
-        
-        assertEquals(1, num);
-        
-    }
-    
-    @Test
-    public void incrementCounterReturnsTrueIfIncrementable(){
-        
-        assertTrue(this.session.incrementCounter());
-        
-    }
-    
-    @Test
-    public void incrementCounterReturnFalseIfUnincrementable(){
-        
-        for(int i = 0; i < 5; i++){
-            this.session.incrementCounter();
-        }
-        
-        assertFalse(this.session.incrementCounter());
-        
-    }
-
 
 }
