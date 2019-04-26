@@ -13,3 +13,5 @@
 /ganbare_sanastotreeni/nb-configuration.xml
 /ganbare_sanastotreeni/h2-1.4.199.jar
 /ganbare_sanastotreeni/user.trace.db
+/ganbare_sanastotreeni/userTest.trace.db
+/ganbare_sanastotreeni/lexiconTest.trace.db
