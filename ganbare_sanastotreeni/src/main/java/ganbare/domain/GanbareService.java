@@ -6,6 +6,10 @@ import ganbare.dao.UserDao;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * Manages all the logical components of the Ganbare software.
+ *
+ */
 public class GanbareService {
 
     private Session session;
@@ -17,6 +21,11 @@ public class GanbareService {
     private int verbs;
     private int adverbs;
 
+    /**
+     * Creates new GanbareService and automatically forms connection
+     * to lexiconDao and userDao. Gets count of different word classes
+     * to be presented in the user interface.
+     */
     public GanbareService() {
         this.lexiconDao = new LexiconDao("jdbc:h2:./lexicon");
         this.userDao = new UserDao("jdbc:h2:./user");
@@ -32,6 +41,16 @@ public class GanbareService {
 
     }
 
+    /**
+     * 
+     * @param language  user set language in which questions are presented (either Finnish or Japanese)
+     * @param substantives boolean value whether substantive words are set to be included in session
+     * @param adjectives boolean value whether adjective words are set to be included in session
+     * @param verbs boolean value whether verb words are set to be included in session
+     * @param adverbs boolean value whether adverb words are set to be included in session
+     * @param length user set length for the number of questions to be asked
+     * @return boolean value whether new session was successfully created.
+     */
     public boolean newSession(String language, boolean substantives, boolean adjectives, boolean verbs, boolean adverbs, int length) {
 
         if (!(language.equals("suomi") || language.equals("日本語")) || (substantives == false && adjectives == false && verbs == false && adverbs == false) || length < 1) {
@@ -55,26 +74,54 @@ public class GanbareService {
 
     }
 
+    /**
+     * @return new question
+     */
     public String newQuestion() {
         return this.session.newQuestion();
     }
 
+    /**
+     * @return number of questions to be asked
+     */
     public int getSessionLength() {
         return this.session.getLength();
     }
 
+    /**
+     * 
+     * @param answer user input for the asked question
+     * @return feedback corresponding correctness of the user answer
+     */
     public String getFeedback(String answer) {
         return this.session.getFeedback(answer);
     }
 
+    /**
+     * @return number of the current question
+     */
     public int getCurrentQuestionNum() {
         return this.session.getCurrentQuestionNum();
     }
 
+    /**
+     * 
+     * @return String feedback of the whole session
+     */
     public String getSessionReview() {
         return this.session.getReview();
     }
 
+    /**
+     * Presented in the user interface so the user knows the maximum number
+     * of words that can be set for the session (session length)
+     * @param substantives boolean value whether substantives are selected
+     * @param adjectives boolean value whether adjectives are selected
+     * @param verbs boolean value whether verbs are selected
+     * @param adverbs boolean value whether adverbs are selected
+     * @return the maximum number of the words in the lexicon combined from the
+     * selected word classes.
+     */
     public int getTotalWords(boolean substantives, boolean adjectives, boolean verbs, boolean adverbs) {
 
         int totalWordCount = 0;
@@ -98,6 +145,12 @@ public class GanbareService {
         return totalWordCount;
     }
 
+    /**
+     * 
+     * @param name user set name
+     * @param password user set password
+     * @return boolean value whether or not new user could be registered
+     */
     public boolean newUser(String name, String password) {
 
         try {
@@ -110,6 +163,12 @@ public class GanbareService {
         }
     }
 
+    /**
+     * 
+     * @param name user set name
+     * @param password user set password
+     * @return boolean value whether login is successfull
+     */
     public boolean loginUser(String name, String password) {
 
         try {
@@ -121,6 +180,13 @@ public class GanbareService {
 
     }
 
+    /**
+     * 
+     * @param original original word that is supposed to be in the database
+     * @param synonym synonym for the original word
+     * @return boolean value whether or not synonym was successfully added to the
+     * database
+     */
     public boolean addFinnishSynonym(String original, String synonym) {
 
         try {
@@ -132,6 +198,16 @@ public class GanbareService {
         return false;
     }
 
+    /**
+     * 
+     * @param finnish new word in Finnish
+     * @param kana new word in Japanase hiragakana or katakana
+     * @param romaji new word in romaji 
+     * @param wordClass class of the new word (e.g. substantive, verb, etc.)
+     * @param chapter chapter in which word is first presented in University of Helsinki's
+     * japanase course
+     * @return boolean value whether or not word was successfully added to the database 
+     */
     public boolean addNewWord(String finnish, String kana, String romaji, String wordClass, int chapter) {
         int wordClassNum = 0;
 
@@ -155,10 +231,18 @@ public class GanbareService {
 
     }
 
+    /**
+     * 
+     * @return lexiconDao formed for this service 
+     */
     public LexiconDao getLexiconDao() {
         return this.lexiconDao;
     }
 
+    /**
+     * 
+     * @return session formed for this service
+     */
     public Session getSession() {
         return this.session;
     }
