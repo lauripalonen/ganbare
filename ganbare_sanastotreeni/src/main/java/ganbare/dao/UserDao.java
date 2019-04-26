@@ -1,14 +1,18 @@
 package ganbare.dao;
 
 import java.sql.*;
-import java.util.*;
-import ganbare.domain.SqlParameters;
 
 public class UserDao {
 
+    private String address;
+
+    public UserDao(String address) {
+        this.address = address;
+    }
+
     public void newUser(String name, String password) throws SQLException {
 
-        Connection connection = DriverManager.getConnection("jdbc:h2:./user", "sa", "");
+        Connection connection = DriverManager.getConnection(this.address, "sa", "");
 
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO User(name, password)"
                 + "VALUES(?, ?)");
@@ -25,7 +29,7 @@ public class UserDao {
 
     public boolean loginUser(String name, String password) throws SQLException {
 
-        Connection connection = DriverManager.getConnection("jdbc:h2:./user", "sa", "");
+        Connection connection = DriverManager.getConnection(this.address, "sa", "");
 
         PreparedStatement stmt = connection.prepareStatement("SELECT name FROM User WHERE name = ? AND password = ?");
 
@@ -46,27 +50,28 @@ public class UserDao {
 
     }
 
-    public void testConnection() throws SQLException {
+    public int userCount() throws SQLException {
 
-        Connection connection = DriverManager.getConnection("jdbc:h2:./user", "sa", "");
-        System.out.println("Connection established to: " + connection.getCatalog());
-        System.out.println("URL: " + connection.getMetaData());
-        System.out.println("");
+        Connection connection = DriverManager.getConnection(this.address, "sa", "");
 
-        PreparedStatement stmt = connection.prepareStatement("SHOW TABLES");
+        PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(*) FROM User");
 
         ResultSet rs = stmt.executeQuery();
 
-        System.out.println("AVAILABLE TABLES: ");
-        while (rs.next()) {
-
-            System.out.println(rs.getString(1));
+        if (rs.next()) {
+            return rs.getInt(1);
         }
 
-        rs.close();
-        stmt.close();
-        connection.close();
+        return -1;
+    }
 
+    public void formatTestUsers() throws SQLException {
+
+        Connection connection = DriverManager.getConnection("jdbc:h2:./userTest", "sa", "");
+
+        PreparedStatement stmt = connection.prepareStatement("DELETE FROM User WHERE NOT name = 'doNotRemove';");
+
+        stmt.executeUpdate();
     }
 
 }
