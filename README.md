@@ -2,6 +2,8 @@
 _Ganbare!!!_ on harjoittelusovellus japanin kielen sanastolle. Sovelluksen käyttäjä voi harjoitella sanastoa joko japanista suomeen tai suomesta japaniin, ja valita haluamansa sanaluokat sekä harjoittelusession pituuden. Sanasto pohjautuu Helsingin yliopiston japanin kielen kurssien sanastoon. 
 
 ## Dokumentaatio
+[Käyttöohje](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
+
 [Vaatimusmäärittely](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittelu.md)
 
 [Arkkitehtuurikuvaus](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
