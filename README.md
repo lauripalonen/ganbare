@@ -38,6 +38,8 @@ mvn jacoco:report
 
 Kattavuusraporttia voi tarkastella avamaalla selaimella tiedosto _target/site/jacoco/index.html_
 
+### Checkstyle
+
 Checkstyle-tiedoston luodaan komennolla
 
 ```
@@ -45,3 +47,15 @@ mvn jxr:jxr checkstyle:checkstyle
 ```
 
 Checkstyle-raporttia voi tarkastella avaamalla selaimella tiedosto _target/site/checkstyle.html_
+
+### JavaDoc
+
+JavaDoc generoidaan komennolla
+
+```
+mvn javadoc:javadoc
+```
+
+JavaDocia voi tarkastella avaamalla selaimella tiedosto target/site/apidocs/index.html
+
+
