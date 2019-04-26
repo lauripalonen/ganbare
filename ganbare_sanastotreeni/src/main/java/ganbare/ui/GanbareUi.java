@@ -80,6 +80,7 @@ public class GanbareUi extends Application {
                 String password = passwordField.getText();
 
                 if (ganbareService.loginUser(name, password)) {
+                    userField.clear();
                     passwordField.clear();
 
                     if (name.equals("admin")) {
@@ -130,7 +131,7 @@ public class GanbareUi extends Application {
 
         optionsPane.setPadding(new Insets(10));
 
-        Label announcementLabel = new Label("ようこそ " + username + "-　さん!");
+        Label announcementLabel = new Label("ようこそ " + username + "-さん!");
         announcementLabel.setAlignment(Pos.CENTER);
         announcementPane.getChildren().add(announcementLabel);
         announcementPane.setAlignment(Pos.CENTER);
@@ -209,7 +210,7 @@ public class GanbareUi extends Application {
 
         });
 
-        subsBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected()) + " sanaa"));
+        subsBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected()) + " sanaa)"));
         adjBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected()) + " sanaa)"));
         verbBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected()) + " sanaa)"));
         adverbBox.setOnAction(e -> wordsLabel.setText("(max: " + ganbareService.getTotalWords(subsBox.isSelected(), adjBox.isSelected(), verbBox.isSelected(), adverbBox.isSelected()) + " sanaa)"));
@@ -227,7 +228,7 @@ public class GanbareUi extends Application {
         VBox sessionPane = new VBox(10);
         BorderPane feedbackPane = new BorderPane();
 
-        Label questionLabel = new Label(ganbareService.getQuestion());
+        Label questionLabel = new Label(ganbareService.newQuestion());
         Label questionNumLabel = new Label("kysymys: 1/" + ganbareService.getSessionLength());
         TextField answerField = new TextField();
         Label feedbackLabel = new Label();
@@ -261,14 +262,14 @@ public class GanbareUi extends Application {
             public void handle(ActionEvent event) {
 
                 String feedback = ganbareService.getFeedback(answerField.getText());
-                String nextQuestion = ganbareService.nextQuestion();
+                String newQuestion = ganbareService.newQuestion();
 
-                if (nextQuestion != null) {
+                if (newQuestion != null) {
 
                     feedbackLabel.setText(feedback);
                     answerField.clear();
                     questionNumLabel.setText("kysymys: " + (ganbareService.getCurrentQuestionNum()) + "/" + ganbareService.getSessionLength());
-                    questionLabel.setText(nextQuestion);
+                    questionLabel.setText(newQuestion);
 
                 } else {
                     primaryStage.setScene(reviewScene(feedback));
@@ -308,15 +309,20 @@ public class GanbareUi extends Application {
         buttonPane.setAlignment(Pos.CENTER);
 
         reviewPane.getChildren().addAll(feedbackPane, textPane, buttonPane);
+        reviewPane.setAlignment(Pos.CENTER);
 
-        Scene testiscene = new Scene(reviewPane, 400, 300);
+        Scene reviewScene = new Scene(reviewPane, 400, 300);
 
-        return testiscene;
+        return reviewScene;
     }
 
     public Scene adminScene() {
+        VBox adminPane = new VBox(10);
         HBox buttonPane = new HBox(10);
 
+        Label infoLabel = new Label("Olet kirjautunut admin-tilaan.");
+        infoLabel.setPadding(new Insets (0, 0, 30, 0));
+        
         Button addWordButton = new Button("Lisää sana");
         Button addSynonymButton = new Button("Lisää synonyymi");
         Button logoutButton = new Button("Kirjaudu ulos");
@@ -327,8 +333,11 @@ public class GanbareUi extends Application {
 
         buttonPane.getChildren().addAll(addWordButton, addSynonymButton, logoutButton);
         buttonPane.setAlignment(Pos.CENTER);
+        
+        adminPane.getChildren().addAll(infoLabel, buttonPane);
+        adminPane.setAlignment(Pos.CENTER);
 
-        Scene adminScene = new Scene(buttonPane, 400, 300);
+        Scene adminScene = new Scene(adminPane, 400, 300);
 
         return adminScene;
 

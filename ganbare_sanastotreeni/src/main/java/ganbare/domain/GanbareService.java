@@ -18,8 +18,8 @@ public class GanbareService {
     private int adverbs;
 
     public GanbareService() {
-        this.lexiconDao = new LexiconDao();
-        this.userDao = new UserDao();
+        this.lexiconDao = new LexiconDao("jdbc:h2:./lexicon");
+        this.userDao = new UserDao("jdbc:h2:./user");
 
         try {
             substantives = this.lexiconDao.getCount(1);
@@ -40,7 +40,7 @@ public class GanbareService {
 
         SqlParameters sqlParams = new SqlParameters(language, substantives, adjectives, verbs, adverbs, length);
 
-        ArrayList<String[]> lexicon = new ArrayList<>();
+        ArrayList<Word> lexicon = new ArrayList<>();
 
         try {
             lexicon = this.lexiconDao.createLexicon(sqlParams);
@@ -49,18 +49,14 @@ public class GanbareService {
             return false;
         }
 
-        this.session = new Session(language, lexicon, length, this.lexiconDao);
+        this.session = new Session(language, lexicon, length);
 
         return true;
 
     }
 
-    public Session getSession() {
-        return this.session;
-    }
-
-    public String getQuestion() {
-        return this.session.getQuestion();
+    public String newQuestion() {
+        return this.session.newQuestion();
     }
 
     public int getSessionLength() {
@@ -71,16 +67,8 @@ public class GanbareService {
         return this.session.getFeedback(answer);
     }
 
-    public String nextQuestion() {
-        if (this.session.incrementCounter()) {
-            return this.session.getQuestion();
-        }
-
-        return null;
-    }
-
     public int getCurrentQuestionNum() {
-        return this.session.getCurrentQuestionNum() + 1;
+        return this.session.getCurrentQuestionNum();
     }
 
     public String getSessionReview() {
@@ -108,10 +96,6 @@ public class GanbareService {
         }
 
         return totalWordCount;
-    }
-
-    public LexiconDao getLexiconDao() {
-        return this.lexiconDao;
     }
 
     public boolean newUser(String name, String password) {
@@ -149,26 +133,34 @@ public class GanbareService {
     }
 
     public boolean addNewWord(String finnish, String kana, String romaji, String wordClass, int chapter) {
-        int wordClassInt = 0;
+        int wordClassNum = 0;
 
         if (wordClass.equals("substantiivi")) {
-            wordClassInt = 1;
+            wordClassNum = 1;
         } else if (wordClass.equals("adjektiivi")) {
-            wordClassInt = 2;
+            wordClassNum = 2;
         } else if (wordClass.equals("verbi")) {
-            wordClassInt = 3;
+            wordClassNum = 3;
         } else if (wordClass.equals("adverbi")) {
-            wordClassInt = 4;
+            wordClassNum = 4;
         }
 
         try {
-            System.out.println("Lisätään: " + finnish + ", " + kana + ", " + romaji + ", " + wordClassInt + ", " + chapter);
-            return lexiconDao.addWord(finnish, kana, romaji, wordClassInt, chapter);
+            System.out.println("Lisätään: " + finnish + ", " + kana + ", " + romaji + ", " + wordClassNum + ", " + chapter);
+            return lexiconDao.addWord(finnish, kana, romaji, wordClassNum, chapter);
         } catch (Exception e) {
             System.out.println("Virhe: " + e);
             return false;
         }
 
+    }
+
+    public LexiconDao getLexiconDao() {
+        return this.lexiconDao;
+    }
+
+    public Session getSession() {
+        return this.session;
     }
 
 }
