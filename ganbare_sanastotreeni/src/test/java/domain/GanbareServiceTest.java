@@ -178,5 +178,37 @@ public class GanbareServiceTest {
 
         assertEquals(null, question);
     }
+    
+    @Test
+    public void addNewWordReturnsFalseIfStringParameterIsMissing(){
+        
+        boolean addWord = this.service.addNewWord("", "", "", "substantive", 0);
+        
+        assertEquals(false, addWord);
+    }
+    
+    @Test
+    public void addFinnishSynonymReturnsFalseIfStringParamterIsMissing(){
+        
+        boolean addSynonym = this.service.addFinnishSynonym("", "synonym");
+        
+        assertEquals(false, addSynonym);
+    }
+    
+    @Test
+    public void addNewUserReturnsFalseIfNameAlreadyInDatabase(){
+        
+        boolean newUser = this.service.newUser("testi", "123");
+        
+        assertEquals(false, newUser);
+    }
+    
+    @Test
+    public void loginUserReturnsFalseIfNoSuchUserExistsInDatabase(){
+        
+        boolean loginUser = this.service.loginUser("nonexistentuser", "password");
+        
+        assertEquals(false, loginUser);
+    }
 
 }

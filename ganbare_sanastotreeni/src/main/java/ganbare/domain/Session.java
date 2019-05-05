@@ -5,8 +5,8 @@ import ganbare.dao.LexiconDao;
 import java.util.*;
 
 /**
- * Session class manages items related to lexicon practice session,
- * including questions, answers, language, session length, etc.
+ * Session class manages items related to lexicon practice session, including
+ * questions, answers, language, session length, etc.
  */
 public class Session {
 
@@ -24,7 +24,7 @@ public class Session {
     private String currentAnswer;
 
     /**
-     * 
+     *
      * @param language language in which questions are presented, set by user
      * @param lexicon ArrayList of words created by lexiconDao
      * @param sessionLength Length of the practice session set by user
@@ -40,21 +40,21 @@ public class Session {
     }
 
     /**
-     * 
-     * @return number of the questions to be presented 
+     *
+     * @return number of the questions to be presented
      */
     public int getLength() {
         return this.sessionLength;
     }
 
     /**
-     * Returns a new question and increases the current question
-     * counter. Returns null if question counter has surpassed the session
-     * length. Sets current question and answer to correct words corresponding
-     * to the questioning language.
-     * 
-     * @return new question from the lexicon ArrayList,
-     * where index corresponds to the current question number
+     * Returns a new question and increases the current question counter.
+     * Returns null if question counter has surpassed the session length. Sets
+     * current question and answer to correct words corresponding to the
+     * questioning language.
+     *
+     * @return new question from the lexicon ArrayList, where index corresponds
+     * to the current question number
      */
     public String newQuestion() {
         if (currentQuestionNum >= sessionLength) {
@@ -78,7 +78,7 @@ public class Session {
     }
 
     /**
-     * 
+     *
      * @return current question
      */
     public String getCurrentQuestion() {
@@ -86,7 +86,7 @@ public class Session {
     }
 
     /**
-     * 
+     *
      * @return current answer
      */
     public String getCurrentAnswer() {
@@ -94,7 +94,7 @@ public class Session {
     }
 
     /**
-     * 
+     *
      * @return number of questions to which user has given correct answer
      */
     public int getCorrectAnswers() {
@@ -102,7 +102,7 @@ public class Session {
     }
 
     /**
-     * 
+     *
      * @return number of the current question
      */
     public int getCurrentQuestionNum() {
@@ -110,7 +110,7 @@ public class Session {
     }
 
     /**
-     * 
+     *
      * @param userInput User's answer on the current question
      * @return feedback corresponding to the user's input
      */
@@ -144,10 +144,11 @@ public class Session {
 
         return false;
     }
+
     /**
-     * 
-     * @return review corresponding to the number of user's correct answers
-     * and number of total questions
+     *
+     * @return review corresponding to the number of user's correct answers and
+     * number of total questions
      */
     public String getReview() {
         return "Oikeita vastauksia: " + this.correctAnswers + "\n"
