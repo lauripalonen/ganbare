@@ -210,5 +210,6 @@ public class GanbareServiceTest {
         
         assertEquals(false, loginUser);
     }
+    
 
 }
