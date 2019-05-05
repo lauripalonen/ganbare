@@ -41,7 +41,6 @@ public class GanbareService {
 
     }
 
-
     /**
      *
      * @param language user set language in which questions are presented
@@ -222,9 +221,7 @@ public class GanbareService {
         if (finnish.isEmpty() || kana.isEmpty() || romaji.isEmpty()) {
             return false;
         }
-
         int wordClassNum = 0;
-
         if (wordClass.equals("substantiivi")) {
             wordClassNum = 1;
         } else if (wordClass.equals("adjektiivi")) {
@@ -234,15 +231,12 @@ public class GanbareService {
         } else if (wordClass.equals("adverbi")) {
             wordClassNum = 4;
         }
-
         try {
             System.out.println("Lisätään: " + finnish + ", " + kana + ", " + romaji + ", " + wordClassNum + ", " + chapter);
             return lexiconDao.addWord(finnish, kana, romaji, wordClassNum, chapter);
         } catch (Exception e) {
-
             return false;
         }
-
     }
 
     /**
