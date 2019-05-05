@@ -10,6 +10,8 @@ _Ganbare!!!_ on harjoittelusovellus japanin kielen sanastolle. Sovelluksen käyt
 
 [Työaikakirjanpito](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
+[Testausdokumentti](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/testaus.md)
+
 ## Releaset
 
 [Viikko 6](https://github.com/Mieskalmari/ot-harjoitustyo/releases/tag/Viikko6)
