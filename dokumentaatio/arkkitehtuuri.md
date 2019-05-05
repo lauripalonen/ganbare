@@ -33,6 +33,7 @@ Sovelluksen pakkauskaavio:
 LexiconDao ja UserDao vastaavat tietojen tallennuksesta sanasto- ja käyttäjätietokantoihin. Käyttäjätietokantaan voi tallentaa uusia käyttäjiä sovelluksen peruskäyttäjät, mutta sanastotietokantaan voi tehdä lisäyksiä vain admin-tunnuksilla.
 
 Tietokantataulut:
+
 <img src="https://raw.githubusercontent.com/Mieskalmari/ot-harjoitustyo/master/dokumentaatio/kuvat/tietokantakaavio.png">
 
 Japaninkielisiä synonyymejä ei ole vielä implementoitu sovellukseen.
@@ -62,4 +63,4 @@ Käyttöliittymä lähettää GanbareService-luokalle pyynnön uudestä kysymyks
 
 ## Admin-toiminnot
 
-Kirjautumisruudussa voi kirjautua admin tunnuksilla, jolloin päästään admin-tilaan. Tilassa voi lisätä uusia sanoja tai synonyymejä paikallisiin sanasto- ja synonyymitietokantoihin. [Käyttöohjeissa] on tarkemmin kuvattu admin-toiminnot (https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md).
+Kirjautumisruudussa voi kirjautua admin tunnuksilla, jolloin päästään admin-tilaan. Tilassa voi lisätä uusia sanoja tai synonyymejä paikallisiin sanasto- ja synonyymitietokantoihin. [Käyttöohjeissa](https://github.com/Mieskalmari/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md) on tarkemmin kuvattu admin-toiminnot.
