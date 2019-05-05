@@ -16,5 +16,5 @@
 | 16.4. | 6    | Testien päivittäminen, pakkauksen luonti, muu optimointi |
 | 26.4  | 8    | Koodin optimointi, dokumentaation laajentaminen, käyttäjätoiminnallisuuksien laajentaminen |
 | 5.5.  | 4    | Koodin siistiminen, dokumentaation laajentaminen |
-| yht.  | 53   | | 
+| yht.  | 57   | | 
 
