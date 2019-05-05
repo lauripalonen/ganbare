@@ -188,6 +188,9 @@ public class GanbareService {
      * database
      */
     public boolean addFinnishSynonym(String original, String synonym) {
+        if(original.isEmpty() || synonym.isEmpty()){
+            return false;
+        }
 
         try {
             return lexiconDao.addFinnishSynonym(original, synonym);
@@ -209,6 +212,10 @@ public class GanbareService {
      * @return boolean value whether or not word was successfully added to the database 
      */
     public boolean addNewWord(String finnish, String kana, String romaji, String wordClass, int chapter) {
+        if (finnish.isEmpty() || kana.isEmpty() || romaji.isEmpty()){
+            return false;
+        }
+        
         int wordClassNum = 0;
 
         if (wordClass.equals("substantiivi")) {

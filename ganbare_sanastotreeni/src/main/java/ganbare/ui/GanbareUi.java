@@ -181,7 +181,7 @@ public class GanbareUi extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if (sessionLengthField.getText().isEmpty()) {
+                if (sessionLengthField.getText().isEmpty() || !sessionLengthField.getText().matches("[0-9]+")) {
                     announcementLabel.setText("Aseta validi sanamäärä");
                 } else {
 
