@@ -238,6 +238,8 @@ public class GanbareService {
             return false;
         }
     }
+    
+    
 
     /**
      *

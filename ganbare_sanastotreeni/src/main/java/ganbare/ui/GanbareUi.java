@@ -154,7 +154,7 @@ public class GanbareUi extends Application {
         languagePane.getChildren().addAll(fromLanguageLabel, directionButton, toLanguageLabel);
 
         Label wordClassLabel = new Label("Sanaluokat:");
-        CheckBox subsBox = new CheckBox("Subsantiivit");
+        CheckBox subsBox = new CheckBox("Substantiivit");
         CheckBox verbBox = new CheckBox("Verbit");
         CheckBox adjBox = new CheckBox("Adjektiivit");
         CheckBox adverbBox = new CheckBox("Adverbit");
