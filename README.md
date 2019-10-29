@@ -22,7 +22,7 @@ _Ganbare!!!_ on harjoittelusovellus japanin kielen sanastolle. Sovelluksen käyt
 Ohjelman voi suorittaa komennolla
 
 ```
-mvn compile exec:java -Dexec.mainClass=ganbare.ui.GanbareUi
+mvn compile exec:java -Dexec.mainClass=ganbare.ui.Main
 ```
 
 ### Testaus
