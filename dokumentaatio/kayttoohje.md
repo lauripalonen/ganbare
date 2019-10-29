@@ -1,9 +1,9 @@
 # Käyttöohje
 
-Lataa tiedosto [ganbare.jar](https://github.com/Mieskalmari/ot-harjoitustyo/releases/tag/loppupalautus).
+Lataa tiedosto [ganbare.zip](https://github.com/Mieskalmari/ot-harjoitustyo/releases/tag/v1.1). Pura .zip-tiedosto.
 
 ## Konfigurointi
-Sovellus olettaa, että käynnistyshakemistossa ovat tietokantatiedostot _lexicon.mv.db_ ja _user.mv.db_. Tiedostot tulevat ganbare.jar -tiedoston mukana.
+Sovellus olettaa, että käynnistyshakemistossa ovat tietokantatiedostot _lexicon.mv.db_ ja _user.mv.db_. Tiedostot tulevat ganbare.zip -tiedoston mukana.
 
 ## Ohjelman käynnistäminen
 Ohjelma käynnistetään komentoriviltä komennolla
