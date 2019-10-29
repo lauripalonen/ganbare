@@ -109,7 +109,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ganbare.ui.GanbareUi</mainClass>
+                                    <mainClass>ganbare.ui.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
